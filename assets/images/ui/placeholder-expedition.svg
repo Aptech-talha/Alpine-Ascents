@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="expBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141e30"/>
+      <stop offset="100%" stop-color="#243b55"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#expBg)"/>
+  <!-- Mountain Silhouette with Summit Flag -->
+  <polygon points="100,350 300,120 500,350" fill="#37474f"/>
+  <polygon points="300,120 310,140 290,160 305,190 500,350" fill="#212121" opacity="0.5"/>
+  <!-- Flag on summit -->
+  <line x1="300" y1="120" x2="300" y2="85" stroke="#ffffff" stroke-width="3"/>
+  <polygon points="300,85 340,97 300,110" fill="#e74c3c"/>
+  <text x="300" y="320" font-family="'Montserrat', sans-serif" font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">
+    HISTORIC EXPEDITION
+  </text>
+</svg>

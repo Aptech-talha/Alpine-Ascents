@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "year": 1786,
+    "title": "First Ascent of Mont Blanc",
+    "description": "Michel-Gabriel Paccard and Jacques Balmat reach the summit of Mont Blanc (4,808 m), marking the birth of modern mountaineering and the exploration of the European Alps.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Alpine Club Archives / Chamonix Historical Register"
+  },
+  {
+    "id": 2,
+    "year": 1857,
+    "title": "Foundation of The Alpine Club (London)",
+    "description": "British climbers establish the world's first mountaineering club in London, promoting the Golden Age of Alpinism and establishing early ethical standards for climbing.",
+    "significance": "Medium",
+    "category": "Organization",
+    "status": "Historical Account",
+    "source": "The Alpine Club (London)"
+  },
+  {
+    "id": 3,
+    "year": 1865,
+    "title": "First Ascent of the Matterhorn",
+    "description": "Edward Whymper's party achieves the legendary first ascent of the Matterhorn via the Hörnli Ridge. The triumph turned tragic during the descent when four members fell to their deaths.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Edward Whymper, Scrambles Amongst the Alps (1871)"
+  },
+  {
+    "id": 4,
+    "year": 1924,
+    "title": "Mallory and Irvine's Historic Everest Attempt",
+    "description": "George Mallory and Andrew Irvine vanish into the swirling mists high on Mount Everest's Northeast Ridge, sparking mountaineering's greatest mystery regarding whether they reached the summit.",
+    "significance": "High",
+    "category": "Exploration",
+    "status": "Historical Account",
+    "source": "Royal Geographical Society / Alpine Club Everest Expedition Records"
+  },
+  {
+    "id": 5,
+    "year": 1950,
+    "title": "First 8,000-Meter Peak Summitted: Annapurna I",
+    "description": "Maurice Herzog and Louis Lachenal summit Annapurna I (8,091 m) in Nepal on June 3, 1950, proving that human beings can reach and survive the planet's highest death zones.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Fédération Française de la Montagne / Annapurna (Maurice Herzog, 1951)"
+  },
+  {
+    "id": 6,
+    "year": 1953,
+    "title": "First Confirmed Ascent of Mount Everest",
+    "description": "Sir Edmund Hillary of New Zealand and Tenzing Norgay of Nepal conquer the highest point on Earth (8,848 m) via the Southeast Ridge expedition led by Sir John Hunt.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Royal Geographical Society / The Himalayan Database"
+  },
+  {
+    "id": 7,
+    "year": 1954,
+    "title": "Italian Ascent of K2 and the Bonatti-Mehdi Bivouac",
+    "description": "Achille Compagnoni and Lino Lacedelli summit K2 (8,611 m) on July 31, 1954. The success depended on Walter Bonatti and Hunza porter Amir Mehdi, who delivered oxygen canisters and survived a forced open-air bivouac at 8,100 m in -30°C conditions without a tent—a heroic feat officially recognized by the Club Alpino Italiano in 2007.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Club Alpino Italiano (CAI) K2 Commission Official Report (2007)"
+  },
+  {
+    "id": 8,
+    "year": 1970,
+    "title": "Rupal Face of Nanga Parbat",
+    "description": "Reinhold and Günther Messner make the first ascent of the roughly 4,600-meter Rupal Face, the highest mountain wall in the world, in a landmark achievement tinged with Günther's tragic loss on descent.",
+    "significance": "High",
+    "category": "Exploration",
+    "status": "Historical Account",
+    "source": "Reinhold Messner, The Naked Mountain (2002)"
+  },
+  {
+    "id": 9,
+    "year": 1975,
+    "title": "First Woman on Mount Everest",
+    "description": "Japanese mountaineer Junko Tabei becomes the first woman to stand on the summit of Mount Everest on May 16, 1975, paving the way for female mountaineers worldwide.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Japanese Alpine Club / The Himalayan Database"
+  },
+  {
+    "id": 10,
+    "year": 1978,
+    "title": "Everest Without Supplementary Oxygen",
+    "description": "Reinhold Messner and Peter Habeler complete the first ascent of Mount Everest without bottled oxygen on May 8, 1978, redefining human physiological limits in the extreme death zone.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Austrian Alpine Club (ÖAV) / Reinhold Messner (1979)"
+  },
+  {
+    "id": 11,
+    "year": 1980,
+    "title": "First Winter Ascent of Mount Everest",
+    "description": "Polish climbers Krzysztof Wielicki and Leszek Cichy conquer Everest in winter on February 17, 1980, under Andrzej Zawada's leadership, launching the era of Polish 'Ice Warriors'.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "Polish Mountaineering Association (PZA) Archives"
+  },
+  {
+    "id": 12,
+    "year": 1980,
+    "title": "Reinhold Messner's Solo Everest Ascent",
+    "description": "Reinhold Messner completes the first solo ascent of Mount Everest without supplementary oxygen or fixed ropes from Tibet during the challenging monsoon season on August 20, 1980.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Historical Account",
+    "source": "The Alpine Journal / Reinhold Messner (The Crystal Horizon, 1980)"
+  },
+  {
+    "id": 13,
+    "year": 1986,
+    "title": "First Completion of All 14 Eight-Thousanders",
+    "description": "Reinhold Messner completes all fourteen 8,000-meter peaks without supplemental oxygen, concluding a legendary 16-year quest across the Himalaya and Karakoram.",
+    "significance": "High",
+    "category": "Record",
+    "status": "Verified Record",
+    "source": "UIAA / The Himalayan Database"
+  },
+  {
+    "id": 14,
+    "year": 1987,
+    "title": "Jerzy Kukuczka Completes the 14 Peaks",
+    "description": "Polish climber Jerzy Kukuczka becomes the second person to scale all 14 eight-thousanders, establishing pioneering new routes on nine of them and completing four in winter.",
+    "significance": "High",
+    "category": "Record",
+    "status": "Verified Record",
+    "source": "Polish Mountaineering Association (PZA) / The Himalayan Database"
+  },
+  {
+    "id": 15,
+    "year": 1996,
+    "title": "The 1996 Mount Everest Disaster",
+    "description": "A severe blizzard claims the lives of eight climbers on Everest on May 10–11, 1996, spotlighting the ethics, safety standards, and logistical hazards of commercial expeditions.",
+    "significance": "Medium",
+    "category": "Exploration",
+    "status": "Historical Account",
+    "source": "The Himalayan Database / Jon Krakauer, Into Thin Air (1997)"
+  },
+  {
+    "id": 16,
+    "year": 2011,
+    "title": "Gerlinde Kaltenbrunner Summits All 14 Without Oxygen",
+    "description": "Austrian mountaineer Gerlinde Kaltenbrunner climbs K2 via the North Pillar on August 23, 2011, becoming the first woman to scale all fourteen 8,000-meter peaks without supplemental oxygen, with verified true summits on all peaks.",
+    "significance": "High",
+    "category": "Record",
+    "status": "Verified Record",
+    "source": "UIAA / National Geographic Society"
+  },
+  {
+    "id": 17,
+    "year": 2019,
+    "title": "Project Possible 14 Peaks Campaign (189 Days)",
+    "description": "Nirmal 'Nims' Purja and his Nepali team completed an unprecedented speed campaign climbing all 14 eight-thousanders in 189 days in 2019. Subsequent terrain research by 8000ers.com noted that several historical teams including Purja's had initially stopped at foresummits on Manaslu and Dhaulagiri; Purja subsequently climbed all verified true summits in autumn 2021.",
+    "significance": "High",
+    "category": "Record",
+    "status": "Documented Expedition Account",
+    "source": "Nirmal Purja, Beyond Possible (2020) / 8000ers.com Summit Research"
+  },
+  {
+    "id": 18,
+    "year": 2021,
+    "title": "First Winter Ascent of K2",
+    "description": "A collaborative team of 10 Nepali climbers led by Nirmal Purja and Mingma Gyalje Sherpa summits K2 in winter on January 16, 2021, conquering the final unconquered winter 8,000-meter peak.",
+    "significance": "High",
+    "category": "First Ascent",
+    "status": "Verified Record",
+    "source": "Alpine Club of Pakistan / American Alpine Journal"
+  },
+  {
+    "id": 19,
+    "year": 2023,
+    "title": "Kristin Harila and Tenjen Sherpa Speed Record",
+    "description": "Norwegian climber Kristin Harila and Tenjen Lama Sherpa summit all fourteen 8,000-meter peaks in 92 days (April to July 2023), completing verified true summits on all peaks to set the fastest recognized time.",
+    "significance": "High",
+    "category": "Record",
+    "status": "Verified Record",
+    "source": "Guinness World Records / The Himalayan Database"
+  },
+  {
+    "id": 20,
+    "year": 2026,
+    "title": "Kami Rita Sherpa Reaches Everest for the 32nd Time",
+    "description": "Nepali guide Kami Rita Sherpa summits Mount Everest for the 32nd time on May 17, 2026, extending his own world record for the most ascents of the mountain and underlining the central role of Sherpa guides in Himalayan climbing.",
+    "significance": "Medium",
+    "category": "Record",
+    "status": "Verified Record",
+    "source": "Nepal Department of Tourism / The Himalayan Database"
+  }
+]

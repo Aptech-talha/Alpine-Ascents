@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "title": "Understanding High-Altitude Sickness & Acclimatization",
+    "category": "Safety",
+    "difficulty": "Beginner",
+    "content": "Acute Mountain Sickness (AMS), High Altitude Pulmonary Edema (HAPE), and High Altitude Cerebral Edema (HACE) are life-threatening conditions resulting from rapid ascent without adequate acclimatization. The golden rule of high altitude is to ascend gradually ('climb high, sleep low'), maintain high fluid intake (4-5 liters daily), and immediately descend if symptoms fail to resolve or deteriorate.",
+    "keyPoints": [
+      "Follow the rule: climb high, sleep low with gradual elevation gains",
+      "Drink 4 to 5 liters of water daily to counter dehydration",
+      "Recognize early AMS symptoms: persistent headache, fatigue, dizziness, and nausea",
+      "Immediate descent is the single most effective treatment for HAPE and HACE"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Avalanche Terrain Evaluation & Rescue Protocols",
+    "category": "Safety",
+    "difficulty": "Advanced",
+    "content": "Avalanches are responsible for significant mountaineering casualties. Recognizing avalanche terrain requires assessing slope angles (typically between 30° and 45°), recent wind-loading, snowpack layering, and rapid temperature changes. Every party member must carry an avalanche transceiver, probe, and shovel, and conduct mandatory companion-rescue drills before stepping onto snow slopes.",
+    "keyPoints": [
+      "Slopes between 30° and 45° present the highest avalanche risk",
+      "Always carry an avalanche transceiver, snow probe, and metal blade shovel",
+      "Conduct transceiver function checks before departing basecamp",
+      "Perform regular pit tests and assess snow layer cohesion on shaded slopes"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Crevasse Rescue & Glacier Travel Systems",
+    "category": "Technique",
+    "difficulty": "Intermediate",
+    "content": "Glacier travel demands disciplined rope team management, continuous awareness of snow bridges, and immediate readiness for crevasse rescue. Roped parties of two or three should maintain 8 to 12 meters of spacing, carry pre-rigged friction hitches (Prusik or mechanical ascenders), and understand 3:1 (Z-pulley) or 6:1 mechanical advantage hauling systems.",
+    "keyPoints": [
+      "Maintain tight rope tension between climbers to arrest unexpected falls instantly",
+      "Anchor snow stakes or T-slot deadmen firmly before approaching crevasse lips",
+      "Carry dedicated prusik loops and micro-traxion progress capture pulleys",
+      "Practice self-arrest techniques with an ice axe in varied snow consistencies"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Mountain Meteorology & Frontal Systems",
+    "category": "Weather",
+    "difficulty": "Intermediate",
+    "content": "Alpine weather changes with extreme velocity due to orographic lifting and barometric depressions. Reading cloud formations—such as lenticular clouds signaling hurricane-force ridge winds or rapidly towering cumulonimbus indicating imminent electrical storms—allows teams to make timely retreat decisions before weather windows collapse.",
+    "keyPoints": [
+      "Monitor sudden barometric pressure drops indicating approaching frontal depressions",
+      "Identify lenticular clouds over summits as warnings of jet-stream turbulence",
+      "Plan summit pushes during stable early morning thermal windows",
+      "Never compromise lightning safety protocols on exposed ridges and summits"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Essential Ropes, Anchors, and Knots in Mountaineering",
+    "category": "Gear",
+    "difficulty": "Beginner",
+    "content": "Ropework is the cornerstone of technical alpine safety. Climbers must master the Figure-Eight on a bight, Alpine Butterfly, Clove Hitch, Munter Hitch, and Prusik friction hitch. Equalized, non-extending, redundant multi-point anchors (ERNEST / SERENE principles) ensure reliability across snow, ice, and alpine rock.",
+    "keyPoints": [
+      "Master tying essential knots with thick mountaineering gloves on",
+      "Construct anchors adhering to SERENE (Solid, Equalized, Redundant, Non-Extending)",
+      "Inspect dynamic climbing ropes routinely for core damage or sheath abrasion",
+      "Retire ropes immediately following severe high-factor dynamic falls"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Alpine Navigation: Map, Compass, and Altimeter",
+    "category": "Navigation",
+    "difficulty": "Intermediate",
+    "content": "While digital GPS devices and offline satellite navigation are invaluable modern aids, batteries rapidly deplete in sub-zero alpine conditions. Relying on paper topographic maps (1:25,000 or 1:50,000), a sighting compass with declination adjustment, and an calibrated barometric altimeter remains the only foolproof navigational safety net in zero-visibility whiteouts.",
+    "keyPoints": [
+      "Keep paper topographic maps in waterproof map cases inside outer layers",
+      "Calibrate barometric altimeters regularly at known elevation benchmarks",
+      "Practice dead reckoning and taking bearings before encountering whiteout conditions",
+      "Store GPS devices close to body core heat to preserve battery longevity"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Frostbite Prevention, Hypothermia & Cold Weather First Aid",
+    "category": "First Aid",
+    "difficulty": "Intermediate",
+    "content": "Cold injuries develop rapidly when wind chill, moisture, and high-altitude hypoxia combine. Frostbite occurs through localized tissue freezing, primarily targeting extremities. Hypothermia sets in when core body temperature dips below 35°C (95°F). Rapid field management includes windproof shelter, warm sweet fluids, gentle passive rewarming, and avoiding rubbing affected extremities.",
+    "keyPoints": [
+      "Avoid tight footwear that restricts peripheral blood circulation to toes",
+      "Change out wet base layers immediately upon reaching camp",
+      "Never rub frozen tissue or thaw extremities if re-freezing risk persists",
+      "Provide high-calorie carbohydrates and warm isotonic drinks to hypothermic climbers"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Leave No Trace (LNT) & High-Altitude Environmental Ethics",
+    "category": "Safety",
+    "difficulty": "Beginner",
+    "content": "Extreme ecosystems are exceptionally fragile; organic waste and abandoned gear take centuries to decompose in sub-zero conditions. Responsible mountaineering entails packing out all solid human waste with clean-waste bags (WAG bags), avoiding single-use plastics, minimizing campfire impacts, and actively participating in clean-up initiatives on popular expedition routes.",
+    "keyPoints": [
+      "Pack out all personal garbage, empty fuel canisters, and food wrappers",
+      "Use approved waste collection systems (WAG bags) on snow and glaciated terrain",
+      "Camp on durable snow or established rock platforms to prevent alpine soil erosion",
+      "Respect mountain wildlife sanctuaries and fragile high-elevation flora"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Physical Conditioning & High-Altitude Endurance Training",
+    "category": "Training",
+    "difficulty": "Beginner",
+    "content": "High-altitude mountaineering demands sustained cardiovascular aerobic capacity (Zone 2 training), eccentric leg strength, and muscular endurance. Preparation should begin 6 to 9 months prior to major expeditions, combining weighted stair climbing, heavy pack hiking, interval training, and core stabilization to build bulletproof resilience.",
+    "keyPoints": [
+      "Prioritize Zone 2 aerobic base building for sustainable metabolic efficiency",
+      "Perform progressive weighted backpack ascents to strengthen knee and hip stabilizers",
+      "Incorporate mobility, flexibility, and core exercises to prevent overuse injuries",
+      "Ensure disciplined rest weeks to avoid overtraining syndrome before expeditions"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Crampon Technique and French / German Footwork",
+    "category": "Technique",
+    "difficulty": "Intermediate",
+    "content": "Efficient crampon movement conserves vital physical energy on steep alpine terrain. Climbers must master flat-footing (French technique, 'Pied à Plat') on low-to-moderate angles to maximize steel point contact, alongside front-pointing (German technique) on steep ice, and mixed hybrid footwork for variable snow and rock transitions.",
+    "keyPoints": [
+      "Keep feet shoulder-width apart to avoid snagging crampon points on gaiters or pants",
+      "Bend ankles to maintain all ten or twelve points in contact with the slope on French technique",
+      "Drive front points firmly with heels level or slightly dropped on vertical water ice",
+      "Ensure crampon anti-balling plates (antibotts) are fitted to prevent dangerous snow buildup"
+    ]
+  }
+]

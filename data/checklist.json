@@ -1,0 +1,119 @@
+[
+  {
+    "id": "clothing",
+    "name": "Clothing and Layers",
+    "icon": "fa-shirt",
+    "items": [
+      { "id": "clothing-1", "name": "Moisture-wicking base layer", "note": "Synthetic or merino; cotton holds sweat and chills you when you stop." },
+      { "id": "clothing-2", "name": "Fleece or grid mid layer", "note": "Your working insulation for the climb itself." },
+      { "id": "clothing-3", "name": "Insulated (down or synthetic) jacket", "note": "Belay jacket for stops, camps and cold descents." },
+      { "id": "clothing-4", "name": "Waterproof shell jacket and trousers", "note": "Wind and precipitation protection; check taped seams." },
+      { "id": "clothing-5", "name": "Softshell or climbing trousers", "note": "Abrasion resistance for rock and snow." },
+      { "id": "clothing-6", "name": "Warm hat and neck gaiter", "note": "Most heat loss is from an uncovered head and neck." },
+      { "id": "clothing-7", "name": "Gloves plus spare liners", "note": "Thin liners for dexterity, thick gloves for summit cold." },
+      { "id": "clothing-8", "name": "Category 4 sunglasses and spare", "note": "Glacier glare causes snow blindness without high UV protection." }
+    ]
+  },
+  {
+    "id": "climbing",
+    "name": "Climbing Equipment",
+    "icon": "fa-mountain",
+    "items": [
+      { "id": "climbing-1", "name": "Climbing harness", "note": "Fits over your layers; check the belay loop and buckles." },
+      { "id": "climbing-2", "name": "Helmet", "note": "Protects against rockfall and falls on snow slopes." },
+      { "id": "climbing-3", "name": "Ice axe (or two for steeper ground)", "note": "Length and pick type depend on the route angle." },
+      { "id": "climbing-4", "name": "Crampons fitted to your boots", "note": "Test the fit at home; a loose crampon is a fall risk." },
+      { "id": "climbing-5", "name": "Climbing rope of suitable length", "note": "Length depends on pitch length and terrain." },
+      { "id": "climbing-6", "name": "Slings and cordelette", "note": "For anchors, extensions and improvised belays." },
+      { "id": "climbing-7", "name": "Locking and non-locking carabiners", "note": "A mix of sizes; inspect gates and screwlocks." },
+      { "id": "climbing-8", "name": "Belay or abseil device", "note": "Match the device to your rope diameter." },
+      { "id": "climbing-9", "name": "Ascender or prusik cord", "note": "For progress on fixed ropes and crevasse rescue." },
+      { "id": "climbing-10", "name": "Ice screws and snow pickets", "note": "Protection appropriate to ice and snow conditions." }
+    ]
+  },
+  {
+    "id": "footwear",
+    "name": "Footwear",
+    "icon": "fa-shoe-prints",
+    "items": [
+      { "id": "footwear-1", "name": "Mountaineering boots", "note": "Stiff enough for crampons; check the sole flex and waterproofing." },
+      { "id": "footwear-2", "name": "Gaiters", "note": "Keep snow, scree and spindrift out of your boots." },
+      { "id": "footwear-3", "name": "Liner socks", "note": "A thin wicking layer reduces friction and blisters." },
+      { "id": "footwear-4", "name": "Thick wool or synthetic socks", "note": "Carry a spare pair; wet socks cause cold feet." },
+      { "id": "footwear-5", "name": "Camp booties", "note": "Warm feet in camp while boots dry." },
+      { "id": "footwear-6", "name": "Spare laces", "note": "A snapped lace high on a route is hard to improvise." }
+    ]
+  },
+  {
+    "id": "navigation",
+    "name": "Navigation and Communication",
+    "icon": "fa-compass",
+    "items": [
+      { "id": "navigation-1", "name": "Paper map and compass", "note": "Still works when batteries and screens fail." },
+      { "id": "navigation-2", "name": "GPS device or route watch", "note": "Carry the route pre-loaded and know how to use it." },
+      { "id": "navigation-3", "name": "Satellite messenger or PLB", "note": "Mobile coverage is rare above the tree line." },
+      { "id": "navigation-4", "name": "Spare batteries for every device", "note": "Cold drains cells far faster than at home." },
+      { "id": "navigation-5", "name": "Power bank and cables", "note": "Keep it warm inside your jacket." },
+      { "id": "navigation-6", "name": "Two-way radios (if travelling as a team)", "note": "Agree channels and check-in times before leaving." },
+      { "id": "navigation-7", "name": "Route plan shared with someone at home", "note": "Include your objective, route and expected return time." }
+    ]
+  },
+  {
+    "id": "food",
+    "name": "Food and Hydration",
+    "icon": "fa-utensils",
+    "items": [
+      { "id": "food-1", "name": "High-calorie snacks within reach", "note": "Eat before you are hungry; appetite drops with altitude." },
+      { "id": "food-2", "name": "Freeze-dried or cooked meals", "note": "Plan one more day of food than the itinerary requires." },
+      { "id": "food-3", "name": "Stove, fuel and windbreak", "note": "Check fuel quantity and that the stove lights cold." },
+      { "id": "food-4", "name": "Lighter and waterproof matches", "note": "Two independent ignition sources." },
+      { "id": "food-5", "name": "Insulated water bottle", "note": "An insulated bottle resists freezing overnight." },
+      { "id": "food-6", "name": "Water treatment (filter or tablets)", "note": "Melted snow still needs treating in many areas." },
+      { "id": "food-7", "name": "Electrolyte tablets or powder", "note": "Replace salts lost through heavy sweating." },
+      { "id": "food-8", "name": "Bowl, mug and spoon", "note": "Insulated mug keeps a hot drink drinkable." }
+    ]
+  },
+  {
+    "id": "safety",
+    "name": "First Aid and Safety",
+    "icon": "fa-kit-medical",
+    "items": [
+      { "id": "safety-1", "name": "First aid kit for the group size", "note": "Know what is inside it before you need it." },
+      { "id": "safety-2", "name": "Blister kit", "note": "Tape, compeed-style dressings and scissors." },
+      { "id": "safety-3", "name": "Personal medication", "note": "Carry your own supply; do not rely on the group kit." },
+      { "id": "safety-4", "name": "Painkillers and anti-inflammatories", "note": "Check allergies and dosage with a pharmacist or doctor." },
+      { "id": "safety-5", "name": "High-factor sun cream", "note": "UV rises sharply with altitude and snow reflection." },
+      { "id": "safety-6", "name": "Lip balm with UV protection", "note": "Cracked lips are a small but constant distraction." },
+      { "id": "safety-7", "name": "Emergency shelter or bivvy bag", "note": "For an unplanned night out or an injured partner." },
+      { "id": "safety-8", "name": "Headlamp with spare batteries", "note": "Most rescues start with a descent in the dark." }
+    ]
+  },
+  {
+    "id": "camping",
+    "name": "Camping and Sleeping",
+    "icon": "fa-campground",
+    "items": [
+      { "id": "camping-1", "name": "Four-season tent with spares", "note": "Pole repair sleeve and a few spare pegs." },
+      { "id": "camping-2", "name": "Sleeping bag rated below the expected minimum", "note": "Ratings assume a dry bag and a good mat." },
+      { "id": "camping-3", "name": "Insulated sleeping pad", "note": "Ground cold, not air temperature, drains your heat." },
+      { "id": "camping-4", "name": "Pillow or stuff sack", "note": "Small comfort that improves sleep at altitude." },
+      { "id": "camping-5", "name": "Stuff sacks and pack liner", "note": "Keep the sleeping bag dry above all else." },
+      { "id": "camping-6", "name": "Earplugs and eye mask", "note": "Shared tents and long daylight hours disrupt rest." },
+      { "id": "camping-7", "name": "Pee bottle (winter camps)", "note": "Leaving the tent at night in deep cold is a real risk." }
+    ]
+  },
+  {
+    "id": "documents",
+    "name": "Documents and Personal Essentials",
+    "icon": "fa-passport",
+    "items": [
+      { "id": "documents-1", "name": "Climbing permit or park registration", "note": "Requirements differ by country and massif." },
+      { "id": "documents-2", "name": "Insurance covering mountaineering and evacuation", "note": "Check the altitude limit and activity exclusions." },
+      { "id": "documents-3", "name": "ID and copies (paper and photo)", "note": "Keep copies separate from the originals." },
+      { "id": "documents-4", "name": "Cash in local currency", "note": "Card readers fail in remote valleys." },
+      { "id": "documents-5", "name": "Printed itinerary and emergency contacts", "note": "Also leave a copy with someone at home." },
+      { "id": "documents-6", "name": "Repair kit (tape, wire, multi-tool)", "note": "Fixes crampon straps, pole baskets and tent poles." },
+      { "id": "documents-7", "name": "Waste bag (leave no trace)", "note": "Pack out what you pack in, including human waste where required." }
+    ]
+  }
+]

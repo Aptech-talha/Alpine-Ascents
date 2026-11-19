@@ -1,0 +1,3599 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Alpine Ascents - Conquer the World's Greatest Peaks. Your comprehensive guide to mountaineering adventures, equipment, and education."
+    />
+    <title>Alpine Ascents | Conquer the World's Greatest Peaks</title>
+    <link rel="icon" type="image/png" href="assets/images/ui/favicon.png" />
+    <meta name="theme-color" content="#0d1117" />
+
+    <!-- Theme must be applied before the first paint, otherwise a returning
+         dark-mode visitor sees a white flash. This runs synchronously in <head>
+         and only ever reads/writes the theme key. -->
+    <script>
+      (function () {
+        var KEY = "alpineAscents_theme";
+        var theme = null;
+        try {
+          var saved = window.localStorage.getItem(KEY);
+          if (saved === "dark" || saved === "light") theme = saved;
+        } catch (e) {
+          /* storage blocked — fall through to system preference */
+        }
+
+        if (!theme) {
+          theme =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+        }
+
+        document.documentElement.setAttribute("data-bs-theme", theme);
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css?v=11" />
+  </head>
+  <body>
+    <!-- Skip link for keyboard & screen-reader users -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- ============================
+         SITE HEADER
+    =============================== -->
+    <header id="site-header" class="site-header fixed-top">
+      <div class="container-fluid header-container px-2 px-sm-3 px-lg-4">
+        <!-- 1. BRAND / LOGO (Left) -->
+        <a class="navbar-brand d-flex align-items-center" href="#home">
+          <img src="/assets/images/ui/nav-icon.png" style="width: 50px; height: 50px;" alt="">
+          <span class="nav-color">Alpine Ascents</span>
+        </a>
+
+        <!-- 2. CENTRAL HEADER CONTENT (Tracker on top, Navigation links below) -->
+        <div class="header-content d-flex flex-column align-items-center justify-content-center">
+          <!-- Restored Tracker (ABOVE navigation links) -->
+          <div id="header-tracker" class="header-tracker" role="status" aria-label="Alpine status tracker">
+            <div class="tracker-pill d-flex align-items-center">
+              <span class="tracker-item d-flex align-items-center">
+                <i class="fas fa-eye text-warning me-1" aria-hidden="true"></i>
+                <span class="tracker-label me-1 d-none d-sm-inline">Visits:</span>
+                <span id="visitor-count" class="tracker-count fw-bold">0</span>
+                <span class="visitor-count-compact d-none">0</span>
+              </span>
+       stat       <span class="tracker-sep mx-2 text-white-50" aria-hidden="true">|</span>
+              <span class="tracker-item d-flex align-items-center">
+                <i class="fas fa-clock text-info me-1" aria-hidden="true"></i>
+                <span id="current-datetime" class="tracker-clock">Loading...</span>
+              </span>
+              <span class="tracker-sep mx-2 text-white-50 d-none d-xxl-inline" aria-hidden="true">|</span>
+              <span class="tracker-item d-none d-xxl-inline-flex align-items-center text-success-emphasis">
+                <i class="fas fa-satellite-dish text-danger fa-pulse me-1" aria-hidden="true"></i>
+                <span class="tracker-network">AlpineNet Live</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Horizontal Navigation Bar on Desktop -->
+          <nav id="navbar" class="navbar navbar-expand-xl navbar-dark p-0" aria-label="Main navigation">
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav align-items-center">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#home"
+                    ><i class="fas fa-home me-1 d-none d-xxl-inline"></i>Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#about"
+                    ><i class="fas fa-info-circle me-1 d-none d-xxl-inline"></i
+                    >About</a
+                  >
+                </li>
+
+                <!-- Explore Dropdown -->
+                <li class="nav-item dropdown">
+                  <button
+                    class="nav-link dropdown-toggle"
+                    type="button"
+                    id="exploreDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fas fa-compass me-1 d-none d-xxl-inline"></i>Explore
+                  </button>
+                  <ul
+                    class="dropdown-menu dropdown-menu-dark shadow"
+                    aria-labelledby="exploreDropdown"
+                  >
+                    <li>
+                      <a class="dropdown-item" href="#mountains"
+                        ><i class="fas fa-mountain me-2 text-danger"></i>Famous
+                        Mountains</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#history"
+                        ><i class="fas fa-history me-2 text-warning"></i
+                        >Mountaineering History</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#records"
+                        ><i class="fas fa-trophy me-2 text-warning"></i>Records &
+                        Firsts</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#expeditions"
+                        ><i class="fas fa-flag me-2 text-success"></i>Expedition
+                        Success Stories</a
+                      >
+                    </li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                      <a class="dropdown-item" href="#organizations"
+                        ><i class="fas fa-map-marked-alt me-2 text-info"></i
+                        >Organizations & Map</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+
+                <!-- Skills & Knowledge Dropdown -->
+                <li class="nav-item dropdown">
+                  <button
+                    class="nav-link dropdown-toggle"
+                    type="button"
+                    id="skillsDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fas fa-book me-1 d-none d-xxl-inline"></i>Skills &
+                    Knowledge
+                  </button>
+                  <ul
+                    class="dropdown-menu dropdown-menu-dark shadow"
+                    aria-labelledby="skillsDropdown"
+                  >
+                    <li>
+                      <a class="dropdown-item" href="#types-styles"
+                        ><i class="fas fa-layer-group me-2 text-primary"></i>Types &
+                        Styles</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#techniques"
+                        ><i class="fas fa-tools me-2 text-warning"></i>Climbing
+                        Techniques</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#sheltering"
+                        ><i class="fas fa-campground me-2 text-success"></i>Alpine
+                        Sheltering</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#hazards-safety"
+                        ><i class="fas fa-exclamation-triangle me-2 text-danger"></i
+                        >Hazards & Safety</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#guidelines"
+                        ><i class="fas fa-clipboard-check me-2 text-info"></i
+                        >General Guidelines</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#checklist"
+                        ><i class="fas fa-list-check me-2"></i>Expedition
+                        Checklist</a
+                      >
+                    </li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                      <a class="dropdown-item" href="#education"
+                        ><i class="fas fa-graduation-cap me-2 text-info"></i
+                        >Education Hub</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+
+                <!-- Gear & Media Dropdown -->
+                <li class="nav-item dropdown">
+                  <button
+                    class="nav-link dropdown-toggle"
+                    type="button"
+                    id="gearDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="fas fa-shield-alt me-1 d-none d-xxl-inline"></i>Gear &
+                    Media
+                  </button>
+                  <ul
+                    class="dropdown-menu dropdown-menu-dark shadow"
+                    aria-labelledby="gearDropdown"
+                  >
+                    <li>
+                      <a class="dropdown-item" href="#equipment"
+                        ><i class="fas fa-toolbox me-2 text-info"></i>Essential
+                        Equipment</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#gallery"
+                        ><i class="fas fa-images me-2 text-primary"></i>Image &
+                        Video Gallery</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#news"
+                        ><i class="fas fa-newspaper me-2 text-success"></i>Latest
+                        Developments</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="#contact"
+                    ><i class="fas fa-envelope me-1 d-none d-xxl-inline"></i
+                    >Contact</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        <!-- 3. EXTERNAL HEADER CONTROLS (Right: Theme Toggle + Shopping Cart + Mobile Hamburger) -->
+        <div class="header-controls d-flex align-items-center ms-auto">
+          <!-- Theme toggle: icon shows the theme you would switch TO -->
+          <button
+            class="btn-theme"
+            type="button"
+            id="theme-toggle"
+            aria-pressed="false"
+            aria-label="Switch to dark mode"
+            title="Switch to dark mode"
+          >
+            <i class="fas fa-moon theme-icon-dark" aria-hidden="true"></i>
+            <i class="fas fa-sun theme-icon-light" aria-hidden="true"></i>
+          </button>
+
+          <!-- Cart trigger: opens the cart drawer from any width -->
+          <button
+            class="btn-cart"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#cart-drawer"
+            aria-controls="cart-drawer"
+            id="cart-open-btn"
+          >
+            <i class="fas fa-cart-shopping" aria-hidden="true"></i>
+            <span class="visually-hidden">Shopping cart,</span>
+            <span id="cart-count" class="cart-count" aria-hidden="true">0</span>
+            <span class="visually-hidden" id="cart-count-sr">0 items</span>
+          </button>
+
+          <!-- Mobile navigation toggler (outside nav, in external controls) -->
+          <button
+            class="navbar-toggler d-xl-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars" id="menuIcon"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+
+    <!-- Populated only when a JSON dataset fails to load -->
+    <div id="data-status" class="container mt-3" role="alert" aria-live="polite" hidden></div>
+      <!-- ============================
+         HERO SECTION
+    =============================== -->
+      <section id="home" class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="container text-center">
+            <h1 class="hero-title">Alpine Ascents</h1>
+            <p class="hero-tagline">Conquer the World's Greatest Peaks</p>
+            <div class="hero-divider"></div>
+            <p class="hero-subtitle">
+              Your ultimate guide to the most majestic mountains, legendary
+              expeditions, and essential gear for high-altitude adventures.
+            </p>
+            <div class="hero-buttons">
+              <a href="#mountains" class="btn btn-hero-primary">
+                <i class="fas fa-mountain"></i> Explore Mountains
+              </a>
+              <a href="#equipment" class="btn btn-hero-secondary">
+                <i class="fas fa-compass"></i> Plan Your Journey
+              </a>
+            </div>
+            <div class="hero-info-bar mt-4">
+              <span id="geo-greeting" class="geo-greeting">
+                <i class="fas fa-map-marker-alt"></i> Detecting your location...
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-scroll-indicator">
+          <a href="#about" aria-label="Scroll to the About section"
+            ><i class="fas fa-chevron-down" aria-hidden="true"></i
+          ></a>
+        </div>
+      </section>
+
+      <!-- ============================
+         ABOUT SECTION
+    =============================== -->
+      <section id="about" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">About Alpine Ascents</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Dedicated to the spirit of mountaineering and the pursuit of
+              summits
+            </p>
+          </div>
+
+          <div class="row align-items-center mb-5">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <div class="about-text">
+                <h3>Our Mission</h3>
+                <p class="lead">
+                  Alpine Ascents is a comprehensive resource dedicated to the
+                  world of mountaineering. We document the planet's most iconic
+                  peaks, chronicle the rich history of alpine exploration, and
+                  provide essential knowledge for climbers at every level.
+                </p>
+                <p>
+                  From the towering giants of the Himalayas to the technical
+                  challenges of the Alps, our platform brings together data,
+                  stories, and expertise to inspire the next generation of
+                  mountaineers. Whether you're planning your first trek or
+                  preparing for an 8,000-meter expedition, Alpine Ascents is
+                  your trusted companion.
+                </p>
+                <p>
+                  We believe that mountains teach us resilience, humility, and
+                  the importance of preparation. Our curated content covers
+                  everything from peak profiles and historical milestones to
+                  gear reviews and safety education.
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-6 animated-border">
+              <div class="about-image-wrapper">
+                <img
+                  src="assets/images/about/about-image.jpg"
+                  alt="Snow-covered mountain range beneath a star-filled night sky"
+                  class="img-fluid rounded shadow-lg"
+                  width="800"
+                  height="533"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Counters -->
+          <div class="row text-center mb-5">
+            <div class="col-6 col-md-3 mb-4">
+              <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-mountain"></i></div>
+                <div class="stat-number" data-target="50">0</div>
+                <div class="stat-label">Peaks Documented</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-globe-americas"></i>
+                </div>
+                <div class="stat-number" data-target="7">0</div>
+                <div class="stat-label">Continents Covered</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+              <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-history"></i></div>
+                <div class="stat-number" data-target="200">0</div>
+                <div class="stat-label">Years of History</div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+              <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+                <div class="stat-number" data-target="100">0</div>
+                <div class="stat-label">Expert Articles</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Cards -->
+          <div class="row">
+            <div class="col-md-6 col-lg-3 mb-4">
+              <div class="feature-card text-center">
+                <div class="feature-icon">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <h4>Safety First</h4>
+                <p>
+                  Comprehensive safety guidelines, risk assessment resources,
+                  and emergency preparedness information for every climb.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+              <div class="feature-card text-center">
+                <div class="feature-icon">
+                  <i class="fas fa-award"></i>
+                </div>
+                <h4>Expert Knowledge</h4>
+                <p>
+                  Curated content from experienced mountaineers, alpine
+                  researchers, and outdoor education professionals.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+              <div class="feature-card text-center">
+                <div class="feature-icon">
+                  <i class="fas fa-users"></i>
+                </div>
+                <h4>Community</h4>
+                <p>
+                  Join a passionate community of climbers, hikers, and mountain
+                  enthusiasts from around the globe.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3 mb-4">
+              <div class="feature-card text-center">
+                <div class="feature-icon">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h4>Education</h4>
+                <p>
+                  In-depth learning resources on altitude science, weather
+                  patterns, navigation, and climbing techniques.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         TYPES & STYLES SECTION
+    =============================== -->
+      <section id="types-styles" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Types & Styles of Mountaineering</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Understanding the diverse climbing disciplines, tactics, and
+              ethical philosophies that define modern alpine ascents.
+            </p>
+          </div>
+
+          <!-- Core Philosophies: Alpine vs Expedition -->
+          <div class="row g-4 mb-5">
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm style-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                  <div
+                    class="style-icon-wrapper me-3 bg-primary-subtle text-primary"
+                  >
+                    <i class="fas fa-feather-alt fa-2x"></i>
+                  </div>
+                  <div>
+                    <span class="badge bg-primary text-white mb-1"
+                      >Pure Alpinism</span
+                    >
+                    <h3 class="fw-bold text-summit mb-0">Alpine Style</h3>
+                  </div>
+                </div>
+                <p class="lead fs-6 text-dark">
+                  A continuous, self-sufficient push from bottom to top without
+                  relying on fixed ropes, high-altitude porters, or bottled
+                  oxygen.
+                </p>
+                <ul class="list-unstyled mb-4 style-checklist">
+                  <li>
+                    <i class="fas fa-check-circle text-success me-2"></i
+                    ><strong>Minimal Gear:</strong> Climbers carry everything
+                    needed on their backs in single packs.
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-success me-2"></i
+                    ><strong>Speed is Safety:</strong> Spending fewer hours
+                    under active seracs and avalanche chutes.
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-success me-2"></i
+                    ><strong>Zero Ecological Trace:</strong> No abandoned ropes,
+                    tents, or oxygen cylinders left on high ridges.
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-success me-2"></i
+                    ><strong>High Commitment:</strong> Once high on the wall,
+                    retreat is complex and self-rescued.
+                  </li>
+                </ul>
+                <div class="mt-auto pt-3 border-top border-light-subtle">
+                  <small class="text-muted"
+                    ><i class="fas fa-user-astronaut me-1 text-primary"></i
+                    ><strong>Iconic Proponents:</strong> Hermann Buhl, Reinhold
+                    Messner, Voytek Kurtyka, Steve House, Ueli Steck</small
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm style-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                  <div
+                    class="style-icon-wrapper me-3 bg-danger-subtle text-danger"
+                  >
+                    <i class="fas fa-campground fa-2x"></i>
+                  </div>
+                  <div>
+                    <span class="badge bg-danger text-white mb-1"
+                      >Systematic Logistics</span
+                    >
+                    <h3 class="fw-bold text-summit mb-0">
+                      Expedition (Siege) Style
+                    </h3>
+                  </div>
+                </div>
+                <p class="lead fs-6 text-dark">
+                  A layered, pyramidal approach using established sequential
+                  camps, fixed lines, support teams, and contingency resources.
+                </p>
+                <ul class="list-unstyled mb-4 style-checklist">
+                  <li>
+                    <i class="fas fa-check-circle text-danger me-2"></i
+                    ><strong>Pyramid of Camps:</strong> Base Camp to Camp IV,
+                    stocked over weeks of ferrying loads.
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-danger me-2"></i
+                    ><strong>Fixed Safety Ropes:</strong> Continuous static
+                    lines through hazardous sections like icefalls.
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-danger me-2"></i
+                    ><strong>Supplemental Oxygen:</strong> Bottled O2 deployed
+                    in the death zone (>8,000m) to counter hypoxia.
+                  </li>
+                  <li>
+                    <i class="fas fa-check-circle text-danger me-2"></i
+                    ><strong>High Redundancy:</strong> Weather retreats allow
+                    rest at lower camps before renewed summit bids.
+                  </li>
+                </ul>
+                <div class="mt-auto pt-3 border-top border-light-subtle">
+                  <small class="text-muted"
+                    ><i class="fas fa-users-cog me-1 text-danger"></i
+                    ><strong>Typical Context:</strong> First exploratory 8,000er
+                    ascents, commercial guided ascents, remote polar
+                    massifs</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Modern Disciplines -->
+          <div class="row g-4 mb-5">
+            <div class="col-md-6 col-xl-3">
+              <div
+                class="card h-100 border-0 shadow-sm discipline-card text-center p-4"
+              >
+                <div class="discipline-icon mb-3 text-info">
+                  <i class="fas fa-cloud-meatball fa-3x"></i>
+                </div>
+                <h5 class="fw-bold text-summit">High-Altitude Alpinism</h5>
+                <p class="text-secondary small">
+                  Navigating extreme altitudes above 5,000m to 8,848m, demanding
+                  cardiovascular endurance and acclimatization mastery.
+                </p>
+                <span class="badge bg-light text-dark border"
+                  >Everest • K2 • Aconcagua</span
+                >
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <div
+                class="card h-100 border-0 shadow-sm discipline-card text-center p-4"
+              >
+                <div class="discipline-icon mb-3 text-warning">
+                  <i class="fas fa-mountain fa-3x"></i>
+                </div>
+                <h5 class="fw-bold text-summit">Technical Big Wall</h5>
+                <p class="text-secondary small">
+                  Vertical to overhanging rock monoliths requiring aid climbing,
+                  multi-day portaledge camps, and precise friction footwork.
+                </p>
+                <span class="badge bg-light text-dark border"
+                  >Trango Towers • Fitz Roy • El Capitan</span
+                >
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <div
+                class="card h-100 border-0 shadow-sm discipline-card text-center p-4"
+              >
+                <div class="discipline-icon mb-3 text-primary">
+                  <i class="fas fa-icicles fa-3x"></i>
+                </div>
+                <h5 class="fw-bold text-summit">Ice & Mixed Climbing</h5>
+                <p class="text-secondary small">
+                  Scaling frozen vertical cascades, glacial couloirs, and
+                  blended rock/ice using dual front-points and curved technical
+                  ice axes.
+                </p>
+                <span class="badge bg-light text-dark border"
+                  >Eiger North Face • Matterhorn • Grandes Jorasses</span
+                >
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3">
+              <div
+                class="card h-100 border-0 shadow-sm discipline-card text-center p-4"
+              >
+                <div class="discipline-icon mb-3 text-success">
+                  <i class="fas fa-skiing fa-3x"></i>
+                </div>
+                <h5 class="fw-bold text-summit">Ski Mountaineering</h5>
+                <p class="text-secondary small">
+                  Skinning up high glaciated peaks on skis followed by steep,
+                  technical 45° to 55° ski descents through couloirs and faces.
+                </p>
+                <span class="badge bg-light text-dark border"
+                  >Mont Blanc Haute Route • Denali West Buttress</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison Table -->
+          <div class="card border-0 shadow-sm p-4">
+            <h5 class="fw-bold text-summit mb-3">
+              <i class="fas fa-balance-scale me-2 text-primary"></i>Style
+              Comparison Matrix
+            </h5>
+            <div
+              class="table-responsive"
+              tabindex="0"
+              role="region"
+              aria-label="Altitude sickness comparison table"
+            >
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Metric</th>
+                    <th>Alpine Style</th>
+                    <th>Expedition (Siege) Style</th>
+                    <th>Capsule / Big Wall</th>
+                    <th>Ski Mountaineering</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Pack Weight</strong></td>
+                    <td>Light (8–14 kg)</td>
+                    <td>Heavy collective (>100 kg)</td>
+                    <td>Variable (hauling bags 40–80 kg)</td>
+                    <td>Medium (12–18 kg)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Speed on Wall</strong></td>
+                    <td><span class="badge bg-success">Very Fast</span></td>
+                    <td>
+                      <span class="badge bg-secondary">Slow & Methodical</span>
+                    </td>
+                    <td>
+                      <span class="badge bg-warning text-dark"
+                        >Moderate Pitch-by-Pitch</span
+                      >
+                    </td>
+                    <td>
+                      <span class="badge bg-success">High Descent Speed</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Fixed Ropes</strong></td>
+                    <td>None (0 meters)</td>
+                    <td>Extensive (1,000–4,000 m)</td>
+                    <td>Working ropes only</td>
+                    <td>None or rappel anchors only</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Supplemental O2</strong></td>
+                    <td>Forbidden by philosophy</td>
+                    <td>Common above 7,500m</td>
+                    <td>None</td>
+                    <td>Rare</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Environmental Footprint</strong></td>
+                    <td>
+                      <span class="badge bg-success">Minimal / Zero</span>
+                    </td>
+                    <td><span class="badge bg-danger">Significant</span></td>
+                    <td>
+                      <span class="badge bg-info text-dark">Localized</span>
+                    </td>
+                    <td><span class="badge bg-success">Clean & Fast</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         MOUNTAINS SECTION
+    =============================== -->
+      <section id="mountains" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">World's Greatest Mountains</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Explore the most iconic peaks across all seven continents — from
+              the highest summits to the most technically challenging ascents.
+            </p>
+          </div>
+
+          <div id="mountains-container" class="row g-4">
+            <!-- Mountain cards populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         HISTORY SECTION
+    =============================== -->
+      <section id="history" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Mountaineering History</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              A journey through centuries of human ambition, courage, and
+              triumph in the world's greatest mountain ranges.
+            </p>
+          </div>
+
+          <div id="history-timeline" class="timeline">
+            <!-- Timeline items populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         TECHNIQUES SECTION
+    =============================== -->
+      <section id="techniques" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Climbing Techniques & Ropework</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              The physical proficiencies, footwork mechanics, and safety
+              maneuvers required on technical alpine terrain.
+            </p>
+            <p class="small text-muted mb-0">
+              Levels show the usual learning stage for each skill. These are
+              overviews for understanding — not a substitute for instruction
+              from a qualified mountain guide.
+            </p>
+          </div>
+
+          <div class="row g-4 mb-5">
+            <!-- Ropework & Glacier Travel -->
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm technique-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                  <div
+                    class="technique-icon-box me-3 bg-primary-subtle text-primary"
+                  >
+                    <i class="fas fa-link fa-2x"></i>
+                  </div>
+                  <div>
+                    <span class="badge bg-primary text-white mb-1"
+                      >Rope Discipline</span
+                    >
+                    <span
+                      class="technique-level bg-warning-subtle text-warning-emphasis border border-warning-subtle"
+                      >Intermediate</span
+                    >
+                    <h4 class="fw-bold text-summit mb-0">
+                      Glacier Travel & Rope Systems
+                    </h4>
+                  </div>
+                </div>
+                <p class="text-secondary">
+                  Moving across glaciated terrain demands rigorous spacing,
+                  continuous rope tension, and immediate arrest capability when
+                  a snow bridge fails.
+                </p>
+                <div class="technique-points">
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>Rope Spacing:</strong> Maintain 10 to 15 meters
+                      of taut distance between rope partners to prevent slack
+                      shock-loading.</span
+                    >
+                  </div>
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>Pre-Rigged Hitches:</strong> Always keep a
+                      friction hitch (Prusik or VT hitch) pre-clipped to your
+                      harness for immediate crevasse self-arrest.</span
+                    >
+                  </div>
+                  <div class="d-flex">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>Kiwi Coils:</strong> Carry excess rope in coils
+                      around the shoulders to allow rapid deployment for haul
+                      systems without untying.</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footwork & Crampons -->
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm technique-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="technique-icon-box me-3 bg-info-subtle text-info">
+                    <i class="fas fa-shoe-prints fa-2x"></i>
+                  </div>
+                  <div>
+                    <span class="badge bg-info text-dark mb-1">Snow & Ice</span>
+                    <span
+                      class="technique-level bg-success-subtle text-success-emphasis border border-success-subtle"
+                      >Beginner</span
+                    >
+                    <h4 class="fw-bold text-summit mb-0">
+                      Crampon Footwork Mechanics
+                    </h4>
+                  </div>
+                </div>
+                <p class="text-secondary">
+                  Efficient footwork conserves vital metabolic energy and
+                  prevents calf burnout on long, steep ascents.
+                </p>
+                <div class="technique-points">
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>French Technique (Pied à Plat):</strong> Splay
+                      feet and flex ankles on slopes up to 40° so all ten base
+                      crampon points bite simultaneously.</span
+                    >
+                  </div>
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>German Front-Pointing:</strong> Drive twin steel
+                      front points directly into steep water ice (>50°) with
+                      heels held level or slightly dropped.</span
+                    >
+                  </div>
+                  <div class="d-flex">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>American Hybrid Technique:</strong> One foot flat
+                      in French style while the upper foot front-points,
+                      alternating fatigue on sustained couloir climbs.</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Anchors SERENE -->
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm technique-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                  <div
+                    class="technique-icon-box me-3 bg-warning-subtle text-warning"
+                  >
+                    <i class="fas fa-anchor fa-2x"></i>
+                  </div>
+                  <div>
+                    <span class="badge bg-warning text-dark mb-1"
+                      >Anchor Physics</span
+                    >
+                    <span
+                      class="technique-level bg-danger-subtle text-danger-emphasis border border-danger-subtle"
+                      >Advanced</span
+                    >
+                    <h4 class="fw-bold text-summit mb-0">
+                      SERENE Anchor Architecture
+                    </h4>
+                  </div>
+                </div>
+                <p class="text-secondary">
+                  Every alpine anchor must satisfy the international SERENE
+                  standard to ensure total system reliability in sub-zero rock
+                  and ice.
+                </p>
+                <div class="technique-points">
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-shield-alt text-warning me-2 mt-1"></i>
+                    <span
+                      ><strong>S - Solid:</strong> Each individual anchor piece
+                      (cam, nut, ice screw, or snow picket) must be bombproof on
+                      its own merit.</span
+                    >
+                  </div>
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-shield-alt text-warning me-2 mt-1"></i>
+                    <span
+                      ><strong>E - Equalized:</strong> Master point cordalette
+                      or sliding-X distributes dynamic force equally across all
+                      placements.</span
+                    >
+                  </div>
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-shield-alt text-warning me-2 mt-1"></i>
+                    <span
+                      ><strong>R - Redundant:</strong> Dual locking carabiners
+                      and multi-strand webbing ensure no single failure can
+                      release the belay.</span
+                    >
+                  </div>
+                  <div class="d-flex">
+                    <i class="fas fa-shield-alt text-warning me-2 mt-1"></i>
+                    <span
+                      ><strong>NE - No Extension:</strong> Limiter knots
+                      guarantee that if one piece blows, the master point will
+                      not shock-load the remaining anchors.</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Crevasse Rescue -->
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm technique-card p-4">
+                <div class="d-flex align-items-center mb-3">
+                  <div
+                    class="technique-icon-box me-3 bg-danger-subtle text-danger"
+                  >
+                    <i class="fas fa-life-ring fa-2x"></i>
+                  </div>
+                  <div>
+                    <span class="badge bg-danger text-white mb-1"
+                      >Self-Rescue</span
+                    >
+                    <span
+                      class="technique-level bg-danger-subtle text-danger-emphasis border border-danger-subtle"
+                      >Advanced</span
+                    >
+                    <h4 class="fw-bold text-summit mb-0">
+                      Crevasse Rescue & 3:1 Hauling
+                    </h4>
+                  </div>
+                </div>
+                <p class="text-secondary">
+                  When a partner falls into a crevasse, prompt execution of
+                  mechanical advantage hauling is required before hypothermia
+                  sets in.
+                </p>
+                <div class="technique-points">
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>Instant Self-Arrest:</strong> Drop into snow,
+                      driving the pick beneath the chest while lifting knees to
+                      prevent crampon catches.</span
+                    >
+                  </div>
+                  <div class="d-flex mb-2">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>Deadman Snow Anchor:</strong> Bury an ice axe or
+                      snow picket horizontally (T-slot) in dense snow to
+                      establish a solid master anchor.</span
+                    >
+                  </div>
+                  <div class="d-flex">
+                    <i class="fas fa-check text-success me-2 mt-1"></i>
+                    <span
+                      ><strong>Z-Pulley 3:1 System:</strong> Rig a
+                      progress-capture pulley and traveling prusik to hoist the
+                      fallen climber with one-third the required effort.</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         SHELTERING SECTION
+    =============================== -->
+      <section id="sheltering" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">
+              Alpine Sheltering & High-Altitude Camps
+            </h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              From 4-season geodesic domes to emergency snow caves: surviving
+              extreme weather, blizzards, and vertical nights.
+            </p>
+          </div>
+
+          <div class="row g-4 mb-5">
+            <!-- 4-Season Tent -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm shelter-card p-4">
+                <div class="shelter-icon-wrapper text-primary mb-3">
+                  <i class="fas fa-campground fa-3x"></i>
+                </div>
+                <h4 class="fw-bold text-summit">4-Season Geodesic Tent</h4>
+                <p class="text-secondary small">
+                  Crisscrossing aircraft-aluminum poles create an interlocking
+                  dome capable of shedding heavy snowfall and surviving 120+
+                  km/h hurricane winds.
+                </p>
+                <div
+                  class="shelter-specs mt-auto pt-3 border-top border-light-subtle"
+                >
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Wind Tolerance:</span>
+                    <strong class="text-summit">120+ km/h</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Typical Weight:</span>
+                    <strong class="text-summit">3.8 – 4.8 kg</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Setup Time:</span>
+                    <strong class="text-summit">8 – 12 minutes</strong>
+                  </div>
+                  <div class="d-flex justify-content-between small text-muted">
+                    <span>Primary Use:</span>
+                    <span class="badge bg-primary">High-Altitude Camps</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Snow Cave -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm shelter-card p-4">
+                <div class="shelter-icon-wrapper text-info mb-3">
+                  <i class="fas fa-igloo fa-3x"></i>
+                </div>
+                <h4 class="fw-bold text-summit">Emergency Snow Cave</h4>
+                <p class="text-secondary small">
+                  Excavated into deep leeward snow drifts. Traps metabolic heat
+                  to maintain an interior temperature around 0°C even when
+                  outside wind chills plunge to -40°C.
+                </p>
+                <div
+                  class="shelter-specs mt-auto pt-3 border-top border-light-subtle"
+                >
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Wind Tolerance:</span>
+                    <strong class="text-success">Immune to Gales</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Required Tool:</span>
+                    <strong class="text-summit">Avalanche Shovel</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Excavation Time:</span>
+                    <strong class="text-summit">90 – 180 minutes</strong>
+                  </div>
+                  <div class="d-flex justify-content-between small text-muted">
+                    <span>Primary Use:</span>
+                    <span class="badge bg-success">Storm Survival Bivy</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bivy Sack -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm shelter-card p-4">
+                <div class="shelter-icon-wrapper text-warning mb-3">
+                  <i class="fas fa-bed fa-3x"></i>
+                </div>
+                <h4 class="fw-bold text-summit">Alpine Bivouac (Bivy) Sack</h4>
+                <p class="text-secondary small">
+                  An ultralight, waterproof-breathable GORE-TEX outer shell
+                  slipped over a down sleeping bag for planned or unplanned
+                  nights perched on narrow ledges.
+                </p>
+                <div
+                  class="shelter-specs mt-auto pt-3 border-top border-light-subtle"
+                >
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Wind Tolerance:</span>
+                    <strong class="text-summit">High (Tied to Anchor)</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Weight:</span>
+                    <strong class="text-summit">350 – 700 grams</strong>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Thermal Boost:</span>
+                    <strong class="text-summit">+4°C to +8°C</strong>
+                  </div>
+                  <div class="d-flex justify-content-between small text-muted">
+                    <span>Primary Use:</span>
+                    <span class="badge bg-warning text-dark"
+                      >Fast & Light Alpinism</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Portaledge -->
+            <div class="col-lg-6 col-md-6">
+              <div class="card h-100 border-0 shadow-sm shelter-card p-4">
+                <div class="shelter-icon-wrapper text-danger mb-3">
+                  <i class="fas fa-layer-group fa-3x"></i>
+                </div>
+                <h4 class="fw-bold text-summit">Big Wall Portaledge</h4>
+                <p class="text-secondary small">
+                  A deployable aluminum frame cot suspended from a single anchor
+                  point on vertical or overhanging rock faces. Fitted with a
+                  storm fly for total rain and snow protection.
+                </p>
+                <div
+                  class="shelter-specs mt-auto pt-3 border-top border-light-subtle"
+                >
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Suspension Anchor:</span>
+                    <strong class="text-danger"
+                      >Bomber Multi-Piece Master Point</strong
+                    >
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Weight (Double):</span>
+                    <strong class="text-summit">6.5 – 9.0 kg</strong>
+                  </div>
+                  <div class="d-flex justify-content-between small text-muted">
+                    <span>Primary Use:</span>
+                    <span class="badge bg-danger"
+                      >Vertical Big Walls (Trango, El Capitan)</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Alpine Refuges -->
+            <div class="col-lg-6 col-md-12">
+              <div class="card h-100 border-0 shadow-sm shelter-card p-4">
+                <div class="shelter-icon-wrapper text-success mb-3">
+                  <i class="fas fa-house-chimney-window fa-3x"></i>
+                </div>
+                <h4 class="fw-bold text-summit">
+                  High-Altitude Mountain Refuges
+                </h4>
+                <p class="text-secondary small">
+                  Permanent stone and wood cabins operated by international
+                  alpine clubs (SAC, DAV, CAI, AAC) perched high on trade
+                  routes, providing bunkrooms, hot tea, and rescue radios.
+                </p>
+                <div
+                  class="shelter-specs mt-auto pt-3 border-top border-light-subtle"
+                >
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Elevation Range:</span>
+                    <strong class="text-summit"
+                      >2,200m – 4,003m (Solvay Hut)</strong
+                    >
+                  </div>
+                  <div
+                    class="d-flex justify-content-between small text-muted mb-1"
+                  >
+                    <span>Amenities:</span>
+                    <strong class="text-summit"
+                      >Dormitory Bunks, Meal Service, Radios</strong
+                    >
+                  </div>
+                  <div class="d-flex justify-content-between small text-muted">
+                    <span>Primary Use:</span>
+                    <span class="badge bg-success"
+                      >Standard Alpine Routes & Acclimatization</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         EQUIPMENT SECTION
+    =============================== -->
+      <section id="equipment" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Essential Equipment</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              The right gear can mean the difference between success and failure
+              — explore the essential equipment for mountaineering.
+            </p>
+            <p class="small text-muted mb-0 mx-auto" style="max-width: 720px">
+              Each card shows the category, a suggested minimum experience
+              level, its typical use, and the routine care or safety check for
+              that kind of gear. Levels are guidance for learning, not a
+              certification standard.
+            </p>
+          </div>
+
+          <div
+            id="equipment-filter-buttons"
+            class="filter-buttons text-center mb-4"
+          >
+            <!-- Filter buttons populated by JS -->
+          </div>
+
+          <div id="equipment-container" class="row g-4">
+            <!-- Equipment cards populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         HAZARDS & SAFETY SECTION
+    =============================== -->
+      <section id="hazards-safety" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Alpine Hazards & Risk Management</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Objective and subjective dangers in extreme environments:
+              identification, mitigation, and emergency action protocols.
+            </p>
+          </div>
+
+          <!-- Objective Hazards Row -->
+          <div class="row g-4 mb-5">
+            <div class="col-12">
+              <h4 class="fw-bold text-summit mb-3">
+                <i class="fas fa-biohazard text-danger me-2"></i>Objective
+                Hazards (Environmental)
+              </h4>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm hazard-card p-4">
+                <div class="hazard-badge bg-danger text-white mb-3">
+                  <i class="fas fa-snowflake me-1"></i> Avalanche Danger
+                </div>
+                <h5 class="fw-bold text-summit">Snow & Slab Avalanches</h5>
+                <p class="text-secondary small">
+                  Slab avalanches occur primarily on 30° to 45° slopes when a
+                  cohesive snow layer slides over a weak crystalline base.
+                  Transceiver, probe, and shovel are non-negotiable.
+                </p>
+                <ul class="list-unstyled small text-muted mb-0">
+                  <li>
+                    <i class="fas fa-shield-alt text-danger me-2"></i>Perform
+                    stability tests (CT / ECT compression pits).
+                  </li>
+                  <li>
+                    <i class="fas fa-shield-alt text-danger me-2"></i>Carry
+                    digital 3-antenna 457 kHz beacons.
+                  </li>
+                  <li>
+                    <i class="fas fa-shield-alt text-danger me-2"></i>Avoid
+                    travel during rapid warming or heavy wind loading.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm hazard-card p-4">
+                <div class="hazard-badge bg-warning text-dark mb-3">
+                  <i class="fas fa-icicles me-1"></i> Glacial Collapse
+                </div>
+                <h5 class="fw-bold text-summit">Seracs & Icefalls</h5>
+                <p class="text-secondary small">
+                  Massive glacial towers (seracs) can topple unpredictably due
+                  to glacial flow gravity. The legendary Khumbu and K2
+                  Bottleneck icefalls require calculated transit.
+                </p>
+                <ul class="list-unstyled small text-muted mb-0">
+                  <li>
+                    <i class="fas fa-shield-alt text-warning me-2"></i>Cross
+                    active icefalls at night (01:00–05:00) during freezing
+                    temperatures.
+                  </li>
+                  <li>
+                    <i class="fas fa-shield-alt text-warning me-2"></i>Never
+                    linger, rest, or camp under active ice seracs.
+                  </li>
+                  <li>
+                    <i class="fas fa-shield-alt text-warning me-2"></i>Move
+                    singly across precarious ladder bridges.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+              <div class="card h-100 border-0 shadow-sm hazard-card p-4">
+                <div class="hazard-badge bg-secondary text-white mb-3">
+                  <i class="fas fa-meteor me-1"></i> Stonefall
+                </div>
+                <h5 class="fw-bold text-summit">Rockfall & Freeze-Thaw</h5>
+                <p class="text-secondary small">
+                  Solar warming melts interstitial ice holding scree and
+                  boulders to high alpine walls, triggering lethal stone
+                  avalanches down couloirs and gulleys.
+                </p>
+                <ul class="list-unstyled small text-muted mb-0">
+                  <li>
+                    <i class="fas fa-shield-alt text-secondary me-2"></i
+                    >Compulsory CE/UIAA alpine climbing helmets at all times.
+                  </li>
+                  <li>
+                    <i class="fas fa-shield-alt text-secondary me-2"></i>Avoid
+                    staying in the fall line of other climbing parties.
+                  </li>
+                  <li>
+                    <i class="fas fa-shield-alt text-secondary me-2"></i>Climb
+                    rock gullies before direct morning sunlight hits the face.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Altitude zones: how the body's oxygen supply changes with height -->
+          <div class="row g-4 mb-5">
+            <div class="col-12">
+              <h4 class="fw-bold text-summit mb-3">
+                <i
+                  class="fas fa-layer-group text-primary me-2"
+                  aria-hidden="true"
+                ></i
+                >Altitude Zones at a Glance
+              </h4>
+              <div
+                class="altitude-zones"
+                role="table"
+                aria-label="Approximate altitude zones and their effect on the human body"
+              >
+                <div class="altitude-zone" role="row">
+                  <span
+                    class="altitude-zone-bar"
+                    style="--zone-width: 100%"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="altitude-zone-label" role="cell">
+                    <strong>Sea level – 2,500 m</strong>
+                    <span
+                      >Normal saturation; altitude illness is uncommon.</span
+                    >
+                  </span>
+                </div>
+                <div class="altitude-zone" role="row">
+                  <span
+                    class="altitude-zone-bar is-moderate"
+                    style="--zone-width: 72%"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="altitude-zone-label" role="cell">
+                    <strong>2,500 – 3,500 m · high altitude</strong>
+                    <span
+                      >Breathing deepens; acute mountain sickness can begin
+                      without gradual ascent.</span
+                    >
+                  </span>
+                </div>
+                <div class="altitude-zone" role="row">
+                  <span
+                    class="altitude-zone-bar is-high"
+                    style="--zone-width: 46%"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="altitude-zone-label" role="cell">
+                    <strong>3,500 – 5,500 m · very high altitude</strong>
+                    <span
+                      >Blood oxygen falls sharply; acclimatisation and slow
+                      ascent become essential.</span
+                    >
+                  </span>
+                </div>
+                <div class="altitude-zone" role="row">
+                  <span
+                    class="altitude-zone-bar is-extreme"
+                    style="--zone-width: 26%"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="altitude-zone-label" role="cell">
+                    <strong>5,500 – 8,000 m · extreme altitude</strong>
+                    <span
+                      >Severe hypoxia; most climbers use supplemental oxygen
+                      above ~7,000 m.</span
+                    >
+                  </span>
+                </div>
+                <div class="altitude-zone" role="row">
+                  <span
+                    class="altitude-zone-bar is-death"
+                    style="--zone-width: 12%"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="altitude-zone-label" role="cell">
+                    <strong>Above 8,000 m · “death zone”</strong>
+                    <span
+                      >Atmospheric pressure is roughly a third of sea level; the
+                      body cannot acclimatise and deteriorates.</span
+                    >
+                  </span>
+                </div>
+              </div>
+              <p class="small text-muted mt-2 mb-0">
+                Zones are approximate and widely used in mountain-medicine
+                literature. Individual response varies — this is general
+                education, not medical advice.
+              </p>
+            </div>
+          </div>
+
+          <!-- Physiological Altitude Hazards -->
+          <div class="row g-4 mb-5">
+            <div class="col-12">
+              <h4 class="fw-bold text-summit mb-3">
+                <i class="fas fa-heartbeat text-danger me-2"></i>High-Altitude
+                Pathologies
+              </h4>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div
+                class="card h-100 border-0 shadow-sm pathology-card p-4 border-start border-4 border-info"
+              >
+                <span class="badge bg-info text-dark align-self-start mb-2"
+                  >Mild / Moderate</span
+                >
+                <h5 class="fw-bold text-summit">
+                  Acute Mountain Sickness (AMS)
+                </h5>
+                <p class="text-secondary small">
+                  Common above 2,500m when ascending too fast. Symptoms resemble
+                  a severe hangover: throbbing headache, fatigue, dizziness,
+                  nausea, and insomnia.
+                </p>
+                <div class="alert alert-light border small mb-0 py-2">
+                  <strong>Treatment:</strong> Rest, hydrate with electrolytes,
+                  stop ascent until symptoms resolve. Acetazolamide (Diamox) can
+                  aid acclimatization.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+              <div
+                class="card h-100 border-0 shadow-sm pathology-card p-4 border-start border-4 border-warning"
+              >
+                <span class="badge bg-warning text-dark align-self-start mb-2"
+                  >Critical Medical Emergency</span
+                >
+                <h5 class="fw-bold text-summit">
+                  High Altitude Pulmonary Edema (HAPE)
+                </h5>
+                <p class="text-secondary small">
+                  Fluid builds up inside air sacs in the lungs. Symptoms include
+                  persistent dry cough turning pink/frothy, severe
+                  breathlessness at rest, cyanosis, and chest congestion.
+                </p>
+                <div class="alert alert-light border small mb-0 py-2">
+                  <strong>Golden Rule:</strong>
+                  <strong>Immediate Descent</strong> (>500m–1,000m) is
+                  mandatory. Administer high-flow O2 and Nifedipine if trained.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12">
+              <div
+                class="card h-100 border-0 shadow-sm pathology-card p-4 border-start border-4 border-danger"
+              >
+                <span class="badge bg-danger text-white align-self-start mb-2"
+                  >Fatal Within Hours</span
+                >
+                <h5 class="fw-bold text-summit">
+                  High Altitude Cerebral Edema (HACE)
+                </h5>
+                <p class="text-secondary small">
+                  Capillary leakage leads to severe brain swelling. Classic
+                  signs include ataxia (inability to walk a straight line),
+                  erratic confusion, hallucinations, and coma.
+                </p>
+                <div class="alert alert-light border small mb-0 py-2">
+                  <strong>Golden Rule:</strong>
+                  <strong>Evacuate Down Instantly.</strong> Deploy portable
+                  hyperbaric bag (Gamow Bag), oxygen, and Dexamethasone
+                  immediately.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Emergency Protocol Card -->
+          <div
+            class="card border-0 shadow-sm emergency-action-card p-4 bg-dark text-white"
+          >
+            <div class="d-flex align-items-center mb-3">
+              <div
+                class="me-3 p-2 bg-danger text-white rounded-circle d-flex align-items-center justify-content-center"
+                style="width: 48px; height: 48px"
+              >
+                <i class="fas fa-first-aid fa-lg"></i>
+              </div>
+              <div>
+                <h4 class="fw-bold mb-0 text-white">
+                  Emergency Response Protocol Checklist
+                </h4>
+                <small class="text-white-50"
+                  >When accidents or severe altitude illnesses occur on the
+                  mountain</small
+                >
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-2 col-sm-4 col-6">
+                <div
+                  class="step-card bg-secondary-subtle text-dark p-3 rounded h-100"
+                >
+                  <span class="badge bg-danger mb-2">Step 1</span>
+                  <h6 class="fw-bold mb-1">Scene Safety</h6>
+                  <p class="small text-muted mb-0">
+                    Assess overhead rockfall and avalanche hazard before
+                    approaching.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-4 col-6">
+                <div
+                  class="step-card bg-secondary-subtle text-dark p-3 rounded h-100"
+                >
+                  <span class="badge bg-danger mb-2">Step 2</span>
+                  <h6 class="fw-bold mb-1">Check ABCs</h6>
+                  <p class="small text-muted mb-0">
+                    Clear airway, monitor breathing and circulation; arrest
+                    major bleeding.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-4 col-6">
+                <div
+                  class="step-card bg-secondary-subtle text-dark p-3 rounded h-100"
+                >
+                  <span class="badge bg-danger mb-2">Step 3</span>
+                  <h6 class="fw-bold mb-1">Thermal Buffer</h6>
+                  <p class="small text-muted mb-0">
+                    Insulate patient from frozen snow using pads, sleeping bags,
+                    and bivy sack.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 col-6">
+                <div
+                  class="step-card bg-secondary-subtle text-dark p-3 rounded h-100"
+                >
+                  <span class="badge bg-danger mb-2">Step 4</span>
+                  <h6 class="fw-bold mb-1">Trigger Satellite SOS</h6>
+                  <p class="small text-muted mb-0">
+                    Transmit GPS coordinates, altitude, patient condition, and
+                    terrain via inReach or PLB.
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 col-12">
+                <div
+                  class="step-card bg-secondary-subtle text-dark p-3 rounded h-100"
+                >
+                  <span class="badge bg-danger mb-2">Step 5</span>
+                  <h6 class="fw-bold mb-1">Initiate Descent</h6>
+                  <p class="small text-muted mb-0">
+                    Never wait for a delayed helicopter at high camp when
+                    gravity provides life-saving air pressure below.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         GUIDELINES SECTION
+    =============================== -->
+      <section id="guidelines" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">General Guidelines & Alpine Ethics</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Leave No Trace principles, high-altitude porter welfare standards,
+              and international mountain etiquette.
+            </p>
+          </div>
+
+          <!-- The 7 Principles of Leave No Trace -->
+          <div class="card border-0 shadow-sm p-4 mb-5">
+            <h4 class="fw-bold text-summit mb-4">
+              <i class="fas fa-leaf text-success me-2"></i>The 7 Principles of
+              Leave No Trace (LNT) in Mountain Ecosystems
+            </h4>
+            <div class="row g-4">
+              <div class="col-md-6 col-lg-4">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="lnt-number me-3 bg-success-subtle text-success fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 36px; height: 36px; min-width: 36px"
+                  >
+                    1
+                  </div>
+                  <div>
+                    <h6 class="fw-bold text-summit mb-1">
+                      Plan Ahead & Prepare
+                    </h6>
+                    <p class="small text-secondary mb-0">
+                      Know route weather patterns, avalanche forecasts, local
+                      permits, and emergency egress options.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="lnt-number me-3 bg-success-subtle text-success fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 36px; height: 36px; min-width: 36px"
+                  >
+                    2
+                  </div>
+                  <div>
+                    <h6 class="fw-bold text-summit mb-1">
+                      Travel on Durable Surfaces
+                    </h6>
+                    <p class="small text-secondary mb-0">
+                      Stay on snow, ice, or established rock paths to protect
+                      delicate high-altitude mosses and tundra.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="lnt-number me-3 bg-success-subtle text-success fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 36px; height: 36px; min-width: 36px"
+                  >
+                    3
+                  </div>
+                  <div>
+                    <h6 class="fw-bold text-summit mb-1">
+                      Dispose of Waste Properly
+                    </h6>
+                    <p class="small text-secondary mb-0">
+                      Pack out all trash, fuel canisters, and food waste. On
+                      glaciated routes, use specialized clean-waste WAG bags.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="lnt-number me-3 bg-success-subtle text-success fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 36px; height: 36px; min-width: 36px"
+                  >
+                    4
+                  </div>
+                  <div>
+                    <h6 class="fw-bold text-summit mb-1">
+                      Leave What You Find
+                    </h6>
+                    <p class="small text-secondary mb-0">
+                      Respect historic route cairns, antique pitons, and natural
+                      geological formations without defacing rock.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="lnt-number me-3 bg-success-subtle text-success fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 36px; height: 36px; min-width: 36px"
+                  >
+                    5
+                  </div>
+                  <div>
+                    <h6 class="fw-bold text-summit mb-1">
+                      Minimize Campfire Impacts
+                    </h6>
+                    <p class="small text-secondary mb-0">
+                      Never burn scarce alpine scrub or wood. Rely exclusively
+                      on self-contained liquid gas and isobutane stoves.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="lnt-number me-3 bg-success-subtle text-success fw-bold rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 36px; height: 36px; min-width: 36px"
+                  >
+                    6
+                  </div>
+                  <div>
+                    <h6 class="fw-bold text-summit mb-1">Respect Wildlife</h6>
+                    <p class="small text-secondary mb-0">
+                      Observe marmots, snow leopards, ibex, and lammergeiers
+                      from a distance. Store all rations in rodent-proof
+                      containers.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Porter Welfare & Distress Signals -->
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm p-4">
+                <h5 class="fw-bold text-summit mb-3">
+                  <i class="fas fa-hand-holding-heart text-danger me-2"></i
+                  >Porter & Guide Welfare Charter
+                </h5>
+                <p class="text-secondary small">
+                  High-altitude porters and Sherpa mountain guides shoulder
+                  extraordinary risks. Alpine ethics dictate strict adherence to
+                  the International Porter Protection Group (IPPG) standards:
+                </p>
+                <ul class="list-unstyled small text-muted">
+                  <li class="mb-2">
+                    <i class="fas fa-check text-success me-2"></i
+                    ><strong>Load Limit Cap:</strong> Porter carry weights must
+                    never exceed 25 kilograms on standard expedition approaches.
+                  </li>
+                  <li class="mb-2">
+                    <i class="fas fa-check text-success me-2"></i
+                    ><strong>Equal Gear Standards:</strong> Adequate sub-zero
+                    boots, crampons, eyewear, and high-altitude shelters must be
+                    provided to all support staff.
+                  </li>
+                  <li class="mb-2">
+                    <i class="fas fa-check text-success me-2"></i
+                    ><strong>Fair Wages & Medical Insurance:</strong>
+                    Comprehensive health, evacuation, and life insurance
+                    coverage is an ethical obligation for every team.
+                  </li>
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i
+                    ><strong>Equal Medical Treatment:</strong> Sick porters
+                    receive identical medical care and instant descent priority
+                    as foreign expedition clients.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="card h-100 border-0 shadow-sm p-4">
+                <h5 class="fw-bold text-summit mb-3">
+                  <i class="fas fa-bullhorn text-warning me-2"></i>International
+                  Alpine Distress Signals
+                </h5>
+                <p class="text-secondary small">
+                  When radios and electronics fail in remote valleys, standard
+                  universal optical and acoustic distress codes enable rescue
+                  coordination:
+                </p>
+                <div class="signal-box p-3 bg-light rounded mb-3 border">
+                  <h6 class="fw-bold text-danger mb-1">
+                    <i class="fas fa-exclamation-circle me-1"></i>Distress Call
+                    (Need Rescue)
+                  </h6>
+                  <p class="small mb-0">
+                    <strong>6 signals per minute</strong> (one whistle blast,
+                    flashlight beam, or mirror flash every 10 seconds), followed
+                    by a <strong>1-minute pause</strong>. Repeat until
+                    acknowledged.
+                  </p>
+                </div>
+                <div class="signal-box p-3 bg-light rounded border">
+                  <h6 class="fw-bold text-success mb-1">
+                    <i class="fas fa-check-circle me-1"></i>Acknowledgment of
+                    Distress Call
+                  </h6>
+                  <p class="small mb-0">
+                    <strong>3 signals per minute</strong> (one blast or light
+                    beam every 20 seconds), followed by a
+                    <strong>1-minute pause</strong>, signifying help is on the
+                    way.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         RECORDS SECTION
+    =============================== -->
+      <section id="records" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Mountaineering Records</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Remarkable achievements, fastest known times, and historic firsts
+              in the world of mountaineering.
+            </p>
+          </div>
+
+          <div
+            id="records-filter-buttons"
+            class="filter-buttons text-center mb-4"
+          >
+            <!-- Filter buttons populated by JS -->
+          </div>
+
+          <div id="records-container" class="row g-4">
+            <!-- Records populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         EXPEDITION SUCCESS STORIES
+    =============================== -->
+      <section id="expeditions" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Expedition Success Stories</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Defining triumphs in high-altitude exploration that expanded human
+              horizons and mountaineering ethics.
+            </p>
+          </div>
+
+                    <div class="row g-4">
+            <!-- 1953 Everest -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm expedition-card">
+                <div
+                  class="expedition-img-wrapper position-relative overflow-hidden"
+                >
+                  <img
+                    src="assets/images/expeditions/everest-southeast-ridge.webp"
+                    class="card-img-top"
+                    alt="Everest Southeast Ridge"
+                    style="height: 200px; object-fit: cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span
+                    class="badge bg-danger position-absolute top-0 end-0 m-2"
+                    >8,848 m</span
+                  >
+                  <span
+                    class="badge bg-dark text-white position-absolute bottom-0 start-0 m-2 border border-secondary"
+                    >May 29, 1953</span
+                  >
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                  <span
+                    class="badge bg-success-subtle text-success-emphasis border border-success-subtle align-self-start mb-2"
+                    ><i class="fas fa-check-circle me-1"></i>Historical Account</span
+                  >
+                  <h5 class="fw-bold text-summit mb-1">
+                    Everest: Hillary & Tenzing
+                  </h5>
+                  <p class="text-muted small mb-2">
+                    <i class="fas fa-route me-1 text-danger"></i>Southeast Ridge
+                    via Hillary Step
+                  </p>
+                  <p class="card-text text-secondary small flex-grow-1">
+                    Under John Hunt's leadership, New Zealander Sir Edmund
+                    Hillary and Nepali Sherpa Tenzing Norgay climbed from the
+                    South Col to achieve humanity's first confirmed summit of
+                    the highest peak on Earth.
+                  </p>
+                  <figure class="my-2 ps-3 border-start border-3 border-primary">
+                    <blockquote class="blockquote small text-muted fst-italic mb-1">
+                      "It is not the mountain we conquer, but ourselves."
+                    </blockquote>
+                    <figcaption class="blockquote-footer text-muted small mb-0">
+                      <cite>Sir Edmund Hillary</cite> (Reflections on Everest, 1953)
+                    </figcaption>
+                  </figure>
+                  <div
+                    class="mt-3 pt-2 border-top border-light-subtle d-flex justify-content-between align-items-center flex-wrap gap-1"
+                  >
+                    <small class="text-muted"
+                      ><i class="fas fa-landmark text-primary me-1"></i>Source:
+                      <a href="https://www.himalayandatabase.com/" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none fw-semibold">RGS / Himalayan Database <i class="fas fa-external-link-alt fa-xs"></i></a>
+                    </small>
+                    <span class="badge bg-success">Landmark Triumph</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1954 K2 -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm expedition-card">
+                <div
+                  class="expedition-img-wrapper position-relative overflow-hidden"
+                >
+                  <img
+                    src="assets/images/expeditions/k2-savage-mountain.webp"
+                    class="card-img-top"
+                    alt="K2 Savage Mountain"
+                    style="height: 200px; object-fit: cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span
+                    class="badge bg-danger position-absolute top-0 end-0 m-2"
+                    >8,611 m</span
+                  >
+                  <span
+                    class="badge bg-dark text-white position-absolute bottom-0 start-0 m-2 border border-secondary"
+                    >July 31, 1954</span
+                  >
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                  <span
+                    class="badge bg-success-subtle text-success-emphasis border border-success-subtle align-self-start mb-2"
+                    ><i class="fas fa-check-circle me-1"></i>Historical Account</span
+                  >
+                  <h5 class="fw-bold text-summit mb-1">
+                    K2: The Italian Conquest & The Bivouac
+                  </h5>
+                  <p class="text-muted small mb-2">
+                    <i class="fas fa-route me-1 text-danger"></i>Abruzzi Spur &
+                    8,100 m Open Bivouac
+                  </p>
+                  <p class="card-text text-secondary small flex-grow-1">
+                    Led by Ardito Desio, Lino Lacedelli and Achille Compagnoni
+                    summitted K2 on July 31, 1954. The triumph was made possible
+                    by 24-year-old Walter Bonatti and Hunza porter Amir Mehdi, who
+                    delivered oxygen to Camp IX. Stranded when Camp IX was moved
+                    higher, Bonatti and Mehdi survived an open bivouac at 8,100 m
+                    in -30Â°C without a tent. In 2007, the Club Alpino Italiano
+                    officially validated their decisive contribution.
+                  </p>
+                  <figure class="my-2 ps-3 border-start border-3 border-warning">
+                    <blockquote class="blockquote small text-muted fst-italic mb-1">
+                      "To live through a night on K2 at 8,100 metres without shelter was deemed humanly impossible, yet we were there, alive."
+                    </blockquote>
+                    <figcaption class="blockquote-footer text-muted small mb-0">
+                      <cite>Walter Bonatti</cite> (The Mountains of My Life, 1961)
+                    </figcaption>
+                  </figure>
+                  <div
+                    class="mt-3 pt-2 border-top border-light-subtle d-flex justify-content-between align-items-center flex-wrap gap-1"
+                  >
+                    <small class="text-muted"
+                      ><i class="fas fa-landmark text-primary me-1"></i>Source:
+                      <a href="https://www.cai.it/" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none fw-semibold">Club Alpino Italiano (CAI) <i class="fas fa-external-link-alt fa-xs"></i></a>
+                    </small>
+                    <span class="badge bg-danger">Extreme Survival</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1978 Messner & Habeler -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm expedition-card">
+                <div
+                  class="expedition-img-wrapper position-relative overflow-hidden"
+                >
+                  <img
+                    src="assets/images/expeditions/everest-without-oxygen.webp"
+                    class="card-img-top"
+                    alt="Everest Without Oxygen"
+                    style="height: 200px; object-fit: cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span
+                    class="badge bg-danger position-absolute top-0 end-0 m-2"
+                    >8,848 m</span
+                  >
+                  <span
+                    class="badge bg-dark text-white position-absolute bottom-0 start-0 m-2 border border-secondary"
+                    >May 8, 1978</span
+                  >
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                  <span
+                    class="badge bg-success-subtle text-success-emphasis border border-success-subtle align-self-start mb-2"
+                    ><i class="fas fa-check-circle me-1"></i>Historical Account</span
+                  >
+                  <h5 class="fw-bold text-summit mb-1">
+                    Everest Without Bottled Oxygen
+                  </h5>
+                  <p class="text-muted small mb-2">
+                    <i class="fas fa-route me-1 text-danger"></i>Southeast Ridge
+                    / South Col
+                  </p>
+                  <p class="card-text text-secondary small flex-grow-1">
+                    Medical scientists had asserted that human survival without
+                    supplemental oxygen was biologically impossible above
+                    8,500m. Reinhold Messner and Peter Habeler proved them
+                    wrong, summiting Everest in pure alpine style on May 8, 1978.
+                  </p>
+                  <figure class="my-2 ps-3 border-start border-3 border-info">
+                    <blockquote class="blockquote small text-muted fst-italic mb-1">
+                      "I was nothing more than a single narrow gasping lung, floating over the mists and the summits."
+                    </blockquote>
+                    <figcaption class="blockquote-footer text-muted small mb-0">
+                      <cite>Reinhold Messner</cite> (Everest: Expedition to the Ultimate, 1979)
+                    </figcaption>
+                  </figure>
+                  <div
+                    class="mt-3 pt-2 border-top border-light-subtle d-flex justify-content-between align-items-center flex-wrap gap-1"
+                  >
+                    <small class="text-muted"
+                      ><i class="fas fa-landmark text-primary me-1"></i>Source:
+                      <a href="https://www.himalayandatabase.com/" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none fw-semibold">Ã–AV / Himalayan Database <i class="fas fa-external-link-alt fa-xs"></i></a>
+                    </small>
+                    <span class="badge bg-primary">Physiological First</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1980 Winter Everest -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm expedition-card">
+                <div
+                  class="expedition-img-wrapper position-relative overflow-hidden"
+                >
+                  <img
+                    src="assets/images/expeditions/winter-everest.webp"
+                    class="card-img-top"
+                    alt="Winter Everest"
+                    style="height: 200px; object-fit: cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="badge bg-info position-absolute top-0 end-0 m-2"
+                    >-42Â°C Windchill</span
+                  >
+                  <span
+                    class="badge bg-dark text-white position-absolute bottom-0 start-0 m-2 border border-secondary"
+                    >Feb 17, 1980</span
+                  >
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                  <span
+                    class="badge bg-success-subtle text-success-emphasis border border-success-subtle align-self-start mb-2"
+                    ><i class="fas fa-check-circle me-1"></i>Historical Account</span
+                  >
+                  <h5 class="fw-bold text-summit mb-1">
+                    First Winter Ascent of Everest
+                  </h5>
+                  <p class="text-muted small mb-2">
+                    <i class="fas fa-route me-1 text-danger"></i>South Col in
+                    Winter Gale
+                  </p>
+                  <p class="card-text text-secondary small flex-grow-1">
+                    Polish 'Ice Warriors' Krzysztof Wielicki and Leszek Cichy
+                    conquered Mount Everest in the dead of winter under Andrzej
+                    Zawada's leadership, overcoming -42Â°C temperatures and
+                    hurricane-force jetstream winds to pioneer winter 8,000er climbing.
+                  </p>
+                  <figure class="my-2 ps-3 border-start border-3 border-secondary">
+                    <blockquote class="blockquote small text-muted fst-italic mb-1">
+                      "Hello Andrzej! We are on the summit! If this wasn't Everest, we would never have endured it."
+                    </blockquote>
+                    <figcaption class="blockquote-footer text-muted small mb-0">
+                      <cite>Krzysztof Wielicki & Leszek Cichy</cite> (Summit Radio Dispatch, Feb 17, 1980)
+                    </figcaption>
+                  </figure>
+                  <div
+                    class="mt-3 pt-2 border-top border-light-subtle d-flex justify-content-between align-items-center flex-wrap gap-1"
+                  >
+                    <small class="text-muted"
+                      ><i class="fas fa-landmark text-primary me-1"></i>Source:
+                      <a href="https://pza.org.pl/" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none fw-semibold">Polish Mountaineering Assoc. (PZA) <i class="fas fa-external-link-alt fa-xs"></i></a>
+                    </small>
+                    <span class="badge bg-info">Winter Pioneer</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2019 Project Possible -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm expedition-card">
+                <div
+                  class="expedition-img-wrapper position-relative overflow-hidden"
+                >
+                  <img
+                    src="assets/images/expeditions/project-possible-14-peaks.webp"
+                    class="card-img-top"
+                    alt="Project Possible 14 Peaks"
+                    style="height: 200px; object-fit: cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span
+                    class="badge bg-success position-absolute top-0 end-0 m-2"
+                    >All 14 Peaks</span
+                  >
+                  <span
+                    class="badge bg-dark text-white position-absolute bottom-0 start-0 m-2 border border-secondary"
+                    >April â€“ Oct 2019</span
+                  >
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                  <span
+                    class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle align-self-start mb-2"
+                    ><i class="fas fa-history me-1"></i>Documented Account (Summit Review)</span
+                  >
+                  <h5 class="fw-bold text-summit mb-1">
+                    Project Possible 14/7: Speed Campaign
+                  </h5>
+                  <p class="text-muted small mb-2">
+                    <i class="fas fa-route me-1 text-danger"></i>Himalaya &
+                    Karakoram Ranges (189 Days)
+                  </p>
+                  <p class="card-text text-secondary small flex-grow-1">
+                    Former British Special Forces soldier Nirmal 'Nims' Purja and
+                    his Nepali team completed an unprecedented speed campaign
+                    climbing all fourteen 8,000-meter peaks in 189 days in 2019.
+                    Chronological terrain investigations by 8000ers.com noted that
+                    initial ascents on Manaslu and Dhaulagiri halted at foresummits;
+                    Purja later climbed all verified true summits in 2021.
+                  </p>
+                  <figure class="my-2 ps-3 border-start border-3 border-success">
+                    <blockquote class="blockquote small text-muted fst-italic mb-1">
+                      "Giving up is not in the blood, sir. It's not in the blood."
+                    </blockquote>
+                    <figcaption class="blockquote-footer text-muted small mb-0">
+                      <cite>Nirmal Purja</cite> (Beyond Possible, 2020)
+                    </figcaption>
+                  </figure>
+                  <div
+                    class="mt-3 pt-2 border-top border-light-subtle d-flex justify-content-between align-items-center flex-wrap gap-1"
+                  >
+                    <small class="text-muted"
+                      ><i class="fas fa-landmark text-primary me-1"></i>Source:
+                      <a href="https://www.guinnessworldrecords.com/" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none fw-semibold">Beyond Possible / 8000ers.com <i class="fas fa-external-link-alt fa-xs"></i></a>
+                    </small>
+                    <span class="badge bg-success">Speed Campaign</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2021 Winter K2 -->
+            <div class="col-lg-4 col-md-6">
+              <div class="card h-100 border-0 shadow-sm expedition-card">
+                <div
+                  class="expedition-img-wrapper position-relative overflow-hidden"
+                >
+                  <img
+                    src="assets/images/expeditions/winter-k2-ascent.webp"
+                    class="card-img-top"
+                    alt="Winter K2 Ascent"
+                    style="height: 200px; object-fit: cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span
+                    class="badge bg-danger position-absolute top-0 end-0 m-2"
+                    >8,611 m</span
+                  >
+                  <span
+                    class="badge bg-dark text-white position-absolute bottom-0 start-0 m-2 border border-secondary"
+                    >Jan 16, 2021</span
+                  >
+                </div>
+                <div class="card-body d-flex flex-column p-4">
+                  <span
+                    class="badge bg-success-subtle text-success-emphasis border border-success-subtle align-self-start mb-2"
+                    ><i class="fas fa-check-circle me-1"></i>Historical Account</span
+                  >
+                  <h5 class="fw-bold text-summit mb-1">
+                    First Winter Ascent of K2
+                  </h5>
+                  <p class="text-muted small mb-2">
+                    <i class="fas fa-route me-1 text-danger"></i>Abruzzi Spur in
+                    Winter (-50Â°C)
+                  </p>
+                  <p class="card-text text-secondary small flex-grow-1">
+                    Ten Nepali mountaineers joining forces under Nirmal Purja
+                    and Mingma Gyalje Sherpa conquered the final winter 8,000er
+                    on January 16, 2021. Ten meters below the summit, they stopped
+                    to regroup and stepped onto the summit together hand-in-hand
+                    while singing the national anthem of Nepal.
+                  </p>
+                  <figure class="my-2 ps-3 border-start border-3 border-danger">
+                    <blockquote class="blockquote small text-muted fst-italic mb-1">
+                      "We made the impossible possible together. K2 winter was the ultimate prize, achieved with brotherhood and pride for Nepal."
+                    </blockquote>
+                    <figcaption class="blockquote-footer text-muted small mb-0">
+                      <cite>Mingma G & Nirmal Purja</cite> (Joint Declaration, Jan 16, 2021)
+                    </figcaption>
+                  </figure>
+                  <div
+                    class="mt-3 pt-2 border-top border-light-subtle d-flex justify-content-between align-items-center flex-wrap gap-1"
+                  >
+                    <small class="text-muted"
+                      ><i class="fas fa-landmark text-primary me-1"></i>Source:
+                      <a href="https://americanalpineclub.org/" target="_blank" rel="noopener noreferrer" class="text-info text-decoration-none fw-semibold">American Alpine Journal (AAJ) <i class="fas fa-external-link-alt fa-xs"></i></a>
+                    </small>
+                    <span class="badge bg-danger">Historic First</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         ORGANIZATIONS & MAP SECTION
+    =============================== -->
+      <section id="organizations" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Organizations & Interactive Map</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Key mountaineering organizations worldwide and an interactive map
+              of major peaks and club headquarters.
+            </p>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+              <div class="map-container shadow-sm rounded overflow-hidden">
+                <div
+                  id="map"
+                  class="interactive-map"
+                  role="region"
+                  aria-label="Interactive map showing the world's major peaks and mountaineering organisations. An equivalent text list of organisations is provided beside the map."
+                ></div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div id="organizations-container">
+                <!-- Organization cards populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         GALLERY SECTION
+    =============================== -->
+      <section id="gallery" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Media Gallery</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Breathtaking photography and expedition footage from the world's
+              most spectacular mountain ranges.
+            </p>
+          </div>
+
+          <div
+            id="gallery-filter-buttons"
+            class="filter-buttons text-center mb-4"
+          >
+            <!-- Filter buttons populated by JS -->
+          </div>
+
+          <div id="gallery-container" class="row g-3">
+            <!-- Gallery items populated by JS -->
+          </div>
+
+          <!-- Video Embeds Showcase -->
+          <div class="gallery-videos mt-5 pt-4 border-top">
+            <h4 class="text-center mb-4 fw-bold text-summit">
+              <i class="fas fa-video text-danger me-2"></i>Featured
+              Mountaineering Documentaries
+            </h4>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="video-wrapper shadow-sm rounded overflow-hidden">
+                  <iframe
+                    src="https://www.youtube.com/embed/gCr4Pg9mEA4"
+                    title="Mountaineering Documentary - Everest"
+                    frameborder="0"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                    "
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <p
+                  class="video-caption text-center mt-2 small fw-semibold text-muted"
+                >
+                  Conquering Everest: The Ultimate Human Challenge
+                </p>
+              </div>
+              <div class="col-md-4">
+                <div class="video-wrapper shadow-sm rounded overflow-hidden">
+                  <iframe
+                    src="https://www.youtube.com/embed/cvFt2Xcuois"
+                    title="K2 - The Savage Mountain"
+                    frameborder="0"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                    "
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <p
+                  class="video-caption text-center mt-2 small fw-semibold text-muted"
+                >
+                  K2: The Savage Mountain Expedition
+                </p>
+              </div>
+              <div class="col-md-4">
+                <div class="video-wrapper shadow-sm rounded overflow-hidden">
+                  <iframe
+                    src="https://www.youtube.com/embed/rGDLZ3A7uJo"
+                    title="Alpine Climbing Adventures"
+                    frameborder="0"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                    "
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <p
+                  class="video-caption text-center mt-2 small fw-semibold text-muted"
+                >
+                  Alpine Climbing: Moving Light Above the Clouds
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Lightbox Modal -->
+        <div
+          class="modal fade"
+          id="gallery-lightbox"
+          tabindex="-1"
+          aria-labelledby="lightbox-title"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark border border-secondary">
+              <div class="modal-header border-bottom border-secondary py-2">
+                <h5 class="modal-title text-white" id="lightbox-title">
+                  Image Title
+                </h5>
+                <div class="d-flex align-items-center gap-3">
+                  <span
+                    id="lightbox-counter"
+                    class="lightbox-counter"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    >1 / 1</span
+                  >
+                  <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close image viewer"
+                  ></button>
+                </div>
+              </div>
+              <div
+                class="modal-body text-center p-0 position-relative bg-black"
+              >
+                <img
+                  id="lightbox-image"
+                  alt=""
+                  class="img-fluid w-100 lightbox-image"
+                />
+                <button
+                  type="button"
+                  id="lightbox-prev"
+                  class="lightbox-nav lightbox-nav-prev"
+                  aria-label="Previous image"
+                  aria-controls="lightbox-image"
+                >
+                  <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                </button>
+                <button
+                  type="button"
+                  id="lightbox-next"
+                  class="lightbox-nav lightbox-nav-next"
+                  aria-label="Next image"
+                  aria-controls="lightbox-image"
+                >
+                  <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div
+                class="modal-footer border-top border-secondary d-flex flex-column align-items-center gap-1 py-2"
+              >
+                <p
+                  id="lightbox-description"
+                  class="text-light mb-0 small text-center"
+                >
+                  Image description
+                </p>
+                <p class="lightbox-hint mb-0">
+                  Use ← → or swipe to browse · Esc to close
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         NEWS SECTION
+    =============================== -->
+      <section id="news" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Latest News</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Stay updated with the latest developments in the mountaineering
+              world.
+            </p>
+           
+          </div>
+
+          <div id="news-container" class="row g-4">
+            <!-- News cards populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         EDUCATION SECTION
+    =============================== -->
+      <section id="education" class="section section-white">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Mountaineering Education</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Essential knowledge and skills for safe and successful mountain
+              adventures.
+            </p>
+          </div>
+
+          <div id="education-container">
+            <!-- Education accordion/content populated by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         PLAN YOUR EXPEDITION — CHECKLIST
+    =============================== -->
+      <section
+        id="checklist"
+        class="section section-white"
+        aria-labelledby="checklist-title"
+      >
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title" id="checklist-title">
+              Plan Your Expedition
+            </h2>
+            <p class="section-subtitle">
+              Prepare for your next adventure with a personalized mountaineering
+              checklist.
+            </p>
+          </div>
+
+          <div class="checklist-toolbar card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+              <div class="row g-4 align-items-end">
+                <div class="col-lg-5">
+                  <label
+                    for="checklist-mountain"
+                    class="form-label fw-semibold"
+                  >
+                    <i
+                      class="fas fa-mountain me-1 text-accent"
+                      aria-hidden="true"
+                    ></i
+                    >Mountain (optional)
+                  </label>
+                  <select
+                    id="checklist-mountain"
+                    class="form-select"
+                    aria-describedby="checklist-mountain-help"
+                  >
+                    <option value="">
+                      General expedition — no peak selected
+                    </option>
+                  </select>
+                  <p id="checklist-mountain-help" class="form-text mb-0">
+                    Selecting a peak only displays its reference data from the
+                    mountain catalogue. Requirements differ by route, season and
+                    conditions.
+                  </p>
+                </div>
+
+                <div class="col-lg-7">
+                  <div
+                    class="d-flex justify-content-between align-items-baseline mb-1"
+                  >
+                    <span
+                      id="checklist-status"
+                      class="checklist-status fw-semibold"
+                      >Not started</span
+                    >
+                    <span class="small text-muted">
+                      <strong id="checklist-done">0</strong> of
+                      <strong id="checklist-total">0</strong> packed ·
+                      <span id="checklist-percent">0%</span>
+                    </span>
+                  </div>
+                  <div
+                    class="progress checklist-progress"
+                    role="progressbar"
+                    aria-labelledby="checklist-status"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    aria-valuenow="0"
+                  >
+                    <div
+                      class="progress-bar"
+                      id="checklist-progress-bar"
+                      style="width: 0%"
+                    ></div>
+                  </div>
+                  <p
+                    id="checklist-mountain-info"
+                    class="checklist-mountain-info small mb-0 mt-3 d-none"
+                    aria-live="polite"
+                  ></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="checklist-disclaimer small text-muted">
+            <i class="fas fa-triangle-exclamation me-1" aria-hidden="true"></i>
+            This is a general packing guide, not a route plan. Equipment,
+            permits and safety measures vary by mountain, route, season and
+            guiding standards — always confirm with a qualified guide or the
+            local authority.
+          </p>
+
+          <div id="checklist-categories" class="checklist-categories"></div>
+
+          <div class="checklist-actions card border-0 shadow-sm mt-4">
+            <div class="card-body p-4">
+              <h3 class="h6 fw-bold mb-3">Add your own item</h3>
+              <form
+                id="checklist-add-form"
+                class="row g-3 align-items-start"
+                novalidate
+              >
+                <div class="col-md-5">
+                  <label for="checklist-new-name" class="form-label small"
+                    >Item name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="checklist-new-name"
+                    maxlength="80"
+                    placeholder="e.g. Spare prismatic compass"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label for="checklist-new-category" class="form-label small"
+                    >Category</label
+                  >
+                  <select
+                    class="form-select"
+                    id="checklist-new-category"
+                  ></select>
+                </div>
+                <div class="col-md-3 d-grid align-self-end">
+                  <button type="submit" class="btn btn-buy">
+                    <i class="fas fa-plus me-2" aria-hidden="true"></i>Add item
+                  </button>
+                </div>
+                <div class="col-12">
+                  <p
+                    id="checklist-add-error"
+                    class="text-danger small mb-0"
+                    role="alert"
+                    hidden
+                  ></p>
+                </div>
+              </form>
+
+              <hr class="my-4" />
+
+              <div
+                class="d-flex flex-wrap gap-2 justify-content-between align-items-center"
+              >
+                <p class="small text-muted mb-0">
+                  Progress is saved in this browser only.
+                </p>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  id="checklist-reset"
+                  data-bs-toggle="modal"
+                  data-bs-target="#checklist-reset-modal"
+                >
+                  <i class="fas fa-rotate-left me-1" aria-hidden="true"></i
+                  >Reset checklist
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reset confirmation — only ever clears the checklist key -->
+      <div
+        class="modal fade"
+        id="checklist-reset-modal"
+        tabindex="-1"
+        aria-labelledby="checklist-reset-title"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title h5" id="checklist-reset-title">
+                Reset your checklist?
+              </h2>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cancel reset"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p class="mb-0">
+                Every ticked item and any custom items you added will be
+                removed. This cannot be undone, and it does not affect your cart
+                or your theme choice.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                id="checklist-reset-confirm"
+              >
+                Reset checklist
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================
+         CONTACT SECTION
+    =============================== -->
+      <section id="contact" class="section section-light">
+        <div class="container">
+          <div class="section-header text-center">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="section-underline"></div>
+            <p class="section-subtitle">
+              Have questions or want to get involved? We'd love to hear from
+              you.
+            </p>
+          </div>
+
+          <div class="row justify-content-center">
+            <div class="col-lg-8 animated-border-contact">
+              <div class="contact-card">
+                <!-- Success Alert (hidden by default) -->
+                <div
+                  id="contact-success"
+                  class="alert alert-success d-none"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <i class="fas fa-check-circle"></i>
+                  <strong>Message Sent!</strong> 
+                </div>
+
+                <form id="contact-form" novalidate>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="contact-name" class="form-label"
+                        >Full Name <span class="text-danger">*</span></label
+                      >
+                      <div class="input-group">
+                        <span class="input-group-text"
+                          ><i class="fas fa-user"></i
+                        ></span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="contact-name"
+                          placeholder="John Doe"
+                          required
+                        />
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter your name.
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="contact-email" class="form-label"
+                        >Email Address <span class="text-danger">*</span></label
+                      >
+                      <div class="input-group">
+                        <span class="input-group-text"
+                          ><i class="fas fa-envelope"></i
+                        ></span>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="contact-email"
+                          placeholder="john@example.com"
+                          required
+                        />
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter a valid email address.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="contact-phone" class="form-label"
+                        >Phone Number</label
+                      >
+                      <div class="input-group">
+                        <span class="input-group-text"
+                          ><i class="fas fa-phone"></i
+                        ></span>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="contact-phone"
+                          placeholder="+1 (555) 000-0000"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="contact-subject" class="form-label"
+                        >Subject <span class="text-danger">*</span></label
+                      >
+                      <div class="input-group">
+                        <span class="input-group-text"
+                          ><i class="fas fa-tag"></i
+                        ></span>
+                        <select
+                          class="form-select"
+                          id="contact-subject"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            Select a subject...
+                          </option>
+                          <option value="general">General Inquiry</option>
+                          <option value="expedition">
+                            Expedition Information
+                          </option>
+                          <option value="equipment">Equipment Advice</option>
+                          <option value="training">Training & Education</option>
+                          <option value="partnership">
+                            Partnership Opportunity
+                          </option>
+                          <option value="feedback">
+                            Feedback & Suggestions
+                          </option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+                      <div class="invalid-feedback">
+                        Please select a subject.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="contact-message" class="form-label"
+                      >Message <span class="text-danger">*</span></label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="contact-message"
+                      rows="5"
+                      placeholder="Write your message here..."
+                      required
+                    ></textarea>
+                    <div class="invalid-feedback">
+                      Please enter your message.
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-summit btn-lg">
+                      <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+         SHOPPING CART DRAWER
+         Front-end only: the cart lives in localStorage. There is no
+         checkout, payment, order or stock check.
+    =============================== -->
+      <div
+        class="offcanvas offcanvas-end cart-drawer"
+        tabindex="-1"
+        id="cart-drawer"
+        aria-labelledby="cart-drawer-title"
+      >
+        <div class="offcanvas-header border-bottom">
+          <h2 class="offcanvas-title h5 mb-0" id="cart-drawer-title">
+            <i
+              class="fas fa-cart-shopping me-2 text-accent"
+              aria-hidden="true"
+            ></i
+            >Your cart
+            <span id="cart-drawer-count" class="badge bg-secondary ms-1"
+              >0</span
+            >
+          </h2>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close cart"
+          ></button>
+        </div>
+
+        <div class="offcanvas-body">
+          <div id="cart-empty" class="cart-empty text-center py-4">
+            <i
+              class="fas fa-cart-shopping fa-2x text-muted mb-3"
+              aria-hidden="true"
+            ></i>
+            <p class="fw-semibold mb-1">Your cart is empty</p>
+            <p class="small text-muted mb-3">
+              Open any item in the equipment catalogue and choose
+              <strong>Add to Cart</strong> to build your kit list.
+            </p>
+            <button
+              type="button"
+              id="cart-continue-empty"
+              class="btn btn-sm btn-details"
+            >
+              <i class="fas fa-arrow-right me-1" aria-hidden="true"></i>Continue
+              shopping
+            </button>
+          </div>
+
+          <ul
+            id="cart-items"
+            class="cart-items list-unstyled mb-0"
+            aria-label="Items in your cart"
+          ></ul>
+        </div>
+
+        <div class="cart-footer border-top" id="cart-footer">
+          <dl class="cart-summary mb-2">
+            <div class="cart-summary-row">
+              <dt>Distinct products</dt>
+              <dd id="cart-distinct">0</dd>
+            </div>
+            <div class="cart-summary-row">
+              <dt>Total quantity</dt>
+              <dd id="cart-total-items">0</dd>
+            </div>
+            <div class="cart-summary-row">
+              <dt>Subtotal</dt>
+              <dd id="cart-subtotal">$0.00</dd>
+            </div>
+            <div class="cart-summary-row cart-summary-total">
+              <dt>Estimated total</dt>
+              <dd id="cart-total-amount" class="cart-total">$0.00</dd>
+            </div>
+          </dl>
+          <p class="cart-summary-note small mb-2">
+            No shipping, tax or fees are defined in this project, so the
+            estimated total equals the subtotal.
+          </p>
+          <p id="cart-unpriced-note" class="small text-muted mb-2 d-none">
+            Items marked “price not listed” are excluded from the total.
+          </p>
+         
+          <div class="d-flex gap-2">
+            <button
+              type="button"
+              id="cart-clear"
+              class="btn btn-sm btn-outline-secondary"
+            >
+              Clear cart
+            </button>
+            <button
+              type="button"
+              id="cart-continue"
+              class="btn btn-sm btn-details flex-grow-1"
+            >
+              <i class="fas fa-arrow-right me-1" aria-hidden="true"></i>Continue
+              shopping
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen-reader announcements for cart changes (no visual output) -->
+      <p
+        id="cart-live-status"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+      <p
+        id="theme-live-status"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+      <p
+        id="checklist-live-status"
+        class="visually-hidden"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+
+      <!-- Add-to-cart confirmation (announced politely, dismisses itself) -->
+      <div
+        id="cart-toast"
+        class="cart-toast"
+        role="status"
+        aria-live="polite"
+        hidden
+      >
+        <i class="fas fa-circle-check text-success me-2" aria-hidden="true"></i>
+        <span id="cart-toast-msg">Added to cart</span>
+        <button
+          type="button"
+          id="cart-toast-undo"
+          class="btn btn-sm btn-link p-0 ms-2"
+          hidden
+        >
+          Undo
+        </button>
+        <button
+          type="button"
+          id="cart-toast-open"
+          class="btn btn-sm btn-link p-0 ms-2"
+        >
+          View cart
+        </button>
+      </div>
+    </main>
+
+    <!-- ============================
+         MOUNTAIN INFORMATION DIALOG
+         Opened from a mountain card image, its "Details" button, or a
+         gallery item that carries a mountainId. One dialog per click —
+         never stacked on top of the gallery lightbox.
+    =============================== -->
+    <div
+      class="modal fade"
+      id="mountain-modal"
+      tabindex="-1"
+      aria-labelledby="mountain-modal-title"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable"
+      >
+        <div class="modal-content border-0 shadow-lg overflow-hidden">
+          <div class="mountain-modal-hero">
+            <img
+              id="mountain-modal-image"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="mountain-modal-hero-overlay">
+              <span id="mountain-modal-difficulty" class="badge mb-2"></span>
+              <h3
+                id="mountain-modal-title"
+                class="modal-title text-white mb-1"
+              ></h3>
+              <p
+                id="mountain-modal-location"
+                class="text-white-50 mb-0 small"
+              ></p>
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white modal-hero-close"
+              data-bs-dismiss="modal"
+              aria-label="Close mountain details"
+            ></button>
+          </div>
+
+          <div class="modal-body p-4">
+            <div
+              id="mountain-modal-facts"
+              class="mountain-facts"
+              role="list"
+            ></div>
+            <p
+              id="mountain-modal-description"
+              class="text-secondary mt-4 mb-3"
+            ></p>
+            <p id="mountain-modal-ascent" class="small text-muted mb-0"></p>
+          </div>
+
+          <div
+            class="modal-footer justify-content-between border-top-0 px-4 pb-4 pt-0"
+          >
+            <span class="small text-muted">
+              <i class="fas fa-circle-info me-1" aria-hidden="true"></i>Data
+              from <code>data/mountains.json</code>
+            </span>
+            <div class="d-flex gap-2">
+              <button
+                type="button"
+                id="mountain-modal-map"
+                class="btn btn-sm btn-outline-danger d-none"
+              >
+                <i class="fas fa-crosshairs me-1" aria-hidden="true"></i>View on
+                map
+              </button>
+              <button
+                type="button"
+                class="btn btn-sm btn-summit"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================
+         GEAR PRODUCT DIALOG (Buy Now)
+         Front-end only: product information plus "Add to Cart".
+         No checkout, payment, order or stock claim.
+    =============================== -->
+    <div
+      class="modal fade"
+      id="product-modal"
+      tabindex="-1"
+      aria-labelledby="product-modal-title"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-dialog-centered modal-lg"
+      >
+        <div class="modal-content border-0 shadow-lg">
+          <div class="row g-0">
+            <div class="col-md-5 product-modal-media">
+              <img
+                id="product-modal-image"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+              <span
+                id="product-modal-essential"
+                class="badge bg-danger position-absolute top-0 start-0 m-3 d-none"
+              >
+                <i class="fas fa-check-circle me-1" aria-hidden="true"></i
+                >Essential
+              </span>
+            </div>
+            <div class="col-md-7">
+              <div class="modal-header border-0 pb-0">
+                <div>
+                  <span
+                    id="product-modal-category"
+                    class="badge bg-info-subtle text-info-emphasis border border-info-subtle mb-2"
+                  ></span>
+                  <h3 id="product-modal-title" class="modal-title h4 mb-0"></h3>
+                </div>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close product details"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <p
+                  id="product-modal-price"
+                  class="product-modal-price mb-1"
+                ></p>
+                <p id="product-modal-meta" class="small text-muted mb-3"></p>
+                <p
+                  id="product-modal-description"
+                  class="text-secondary small"
+                ></p>
+                <dl class="product-modal-facts mb-3">
+                  <dt>Typical use</dt>
+                  <dd id="product-modal-use"></dd>
+                  <dt>Care &amp; safety</dt>
+                  <dd id="product-modal-care"></dd>
+                </dl>
+                
+              </div>
+              <div class="modal-footer border-0 pt-0 d-flex gap-2">
+                <button
+                  type="button"
+                  class="btn btn-summit"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-buy flex-grow-1"
+                  id="product-add-to-cart"
+                  data-add-to-cart
+                >
+                  <i class="fas fa-cart-plus me-2" aria-hidden="true"></i>Add to
+                  Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================
+         FOOTER
+    =============================== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          <!-- About Column -->
+          <div class="col-lg-4 mb-4">
+            <h5 class="footer-heading">
+              <i class="fas fa-mountain"></i> Alpine Ascents
+            </h5>
+            <p class="footer-text">
+              Your comprehensive resource for mountaineering adventures,
+              equipment guides, and alpine education. Exploring the world's
+              greatest peaks since the dawn of climbing.
+            </p>
+            <p class="footer-text mb-1">
+              <strong class="text-white">Official alpine resources</strong>
+            </p>
+            <div class="footer-social">
+              <a
+                href="https://www.theuiaa.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="UIAA – International Climbing and Mountaineering Federation"
+                aria-label="UIAA official website (opens in a new tab)"
+                ><i class="fas fa-globe" aria-hidden="true"></i
+              ></a>
+              <a
+                href="https://ifmga.info/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="IFMGA – International Federation of Mountain Guides Associations"
+                aria-label="IFMGA official website (opens in a new tab)"
+                ><i class="fas fa-user-shield" aria-hidden="true"></i
+              ></a>
+              <a
+                href="https://americanalpineclub.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="American Alpine Club"
+                aria-label="American Alpine Club official website (opens in a new tab)"
+                ><i class="fas fa-landmark" aria-hidden="true"></i
+              ></a>
+              <a
+                href="https://www.himalayandatabase.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="The Himalayan Database"
+                aria-label="The Himalayan Database official website (opens in a new tab)"
+                ><i class="fas fa-database" aria-hidden="true"></i
+              ></a>
+              <a
+                href="https://www.spcc.org.np/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                title="Sagarmatha Pollution Control Committee"
+                aria-label="Sagarmatha Pollution Control Committee official website (opens in a new tab)"
+                ><i class="fas fa-recycle" aria-hidden="true"></i
+              ></a>
+            </div>
+               <div class="social-container">
+                <!-- x -->
+        <a data-social="Twitter" style="--accent-color:#000000;" href="#" ><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>X</title><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg></a>
+            <!-- Facebook -->
+        <a data-social="Facebook" style="--accent-color:#0866FF;" href="#" ><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook</title><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></a>
+            <!-- Youtube -->
+        <a data-social="Youtube" style="--accent-color:#FF0000;" href="#" ><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>YouTube</title><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                <!-- Instagram -->
+        <a data-social="Instagram" style="--accent-color:#FF0069;" href="#" ><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram</title><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a>
+            <!-- WhatsApp -->
+        <a data-social="WhatsApp" style="--accent-color:#25D366;" href="#" ><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+    </div>
+    
+          </div>
+
+          <!-- Quick Links Column -->
+          <div class="col-lg-2 col-md-4 mb-4">
+            <h5 class="footer-heading">Explore</h5>
+            <ul class="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#types-styles">Types & Styles</a></li>
+              <li><a href="#mountains">Mountains</a></li>
+              <li><a href="#history">History</a></li>
+              <li><a href="#expeditions">Expeditions</a></li>
+              <li><a href="#organizations">Organizations</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Resources Column -->
+          <div class="col-lg-2 col-md-4 mb-4">
+            <h5 class="footer-heading">Skills & Media</h5>
+            <ul class="footer-links">
+              <li><a href="#techniques">Techniques</a></li>
+              <li><a href="#sheltering">Sheltering</a></li>
+              <li><a href="#equipment">Equipment</a></li>
+              <li><a href="#hazards-safety">Hazards & Safety</a></li>
+              <li><a href="#guidelines">Guidelines & Ethics</a></li>
+              <li><a href="#records">Records</a></li>
+              <li><a href="#gallery">Media Gallery</a></li>
+              <li><a href="#education">Education Hub</a></li>
+              <li><a href="#news">Latest News</a></li>
+            </ul>
+          </div>
+
+          <!-- Contact Info Column -->
+          <div class="col-lg-4 col-md-4 mb-4">
+            <h5 class="footer-heading">Contact Info</h5>
+            <ul class="footer-contact">
+              <li>
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <span>Alpine Ascents HQ, Mountain Valley, CO 80401</span>
+              </li>
+              <li>
+                <i class="fas fa-phone" aria-hidden="true"></i>
+                <span>+1 (555) 123-4567</span>
+              </li>
+              <li>
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+                <span>info@alpineascents.demo</span>
+              </li>
+            </ul>
+
+            <!-- Newsletter -->
+            <h6 class="mt-3 text-white">Newsletter</h6>
+            <form
+              class="newsletter-form"
+              onsubmit="
+                event.preventDefault();
+                const email = this.querySelector('input').value;
+                if (email) {
+                  alert(
+                    'Thank you for subscribing.',
+                  );
+                  this.reset();
+                }
+              "
+            >
+              <div class="input-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Your email address"
+                  aria-label="Newsletter email address"
+                  required
+                />
+                <button
+                  class="btn btn-accent"
+                  type="submit"
+                  aria-label="Subscribe to simulated newsletter"
+                >
+                  <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <hr class="footer-divider" />
+
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <p class="footer-copyright">
+              &copy; <span id="footer-year">2026</span> Alpine Ascents. All
+              rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ============================
+         BOTTOM SCROLLING TICKER
+    =============================== -->
+    <div id="bottom-ticker" class="bottom-ticker">
+      <div class="ticker-badge">
+        <i class="fas fa-satellite-dish text-danger fa-pulse me-1"></i>
+        <span class="d-none d-sm-inline">ALPINENET LIVE</span>
+      </div>
+      <div class="ticker-content-wrapper">
+        <div class="ticker-marquee" id="ticker-marquee">
+          <span class="ticker-item"
+            ><i class="fas fa-clock text-info me-1" aria-hidden="true"></i
+            ><span id="ticker-datetime" class="ticker-datetime"
+              >Loading date...</span
+            ></span
+          >
+          <span class="ticker-separator mx-2" aria-hidden="true">•</span>
+          <span class="ticker-item"
+            ><i class="fas fa-eye text-warning me-1" aria-hidden="true"></i
+            >Visits:
+            <span id="ticker-visitor-count" class="ticker-visitor-count"
+              >0</span
+            >
+            <span class="ticker-visitor-label">(this browser)</span></span
+          >
+          <span class="ticker-separator mx-2" aria-hidden="true">•</span>
+          <span class="ticker-item"
+            ><i
+              class="fas fa-map-marker-alt text-success me-1"
+              aria-hidden="true"
+            ></i
+            ><span id="ticker-geo" class="ticker-geo"
+              >Location: not shared</span
+            ></span
+          >
+          <span class="ticker-separator mx-2">•</span>
+          <span class="ticker-item"
+            ><i class="fas fa-mountain text-danger me-1"></i>Everest (8,848m):
+            -28°C, Jetstream winds 45 km/h at South Col</span
+          >
+          <span class="ticker-separator mx-2">•</span>
+          <span class="ticker-item"
+            ><i class="fas fa-snowflake text-info me-1"></i>K2 (8,611m): Heavy
+            snowpack, Bottleneck serac monitored</span
+          >
+          <span class="ticker-separator mx-2">•</span>
+          <span class="ticker-item"
+            ><i class="fas fa-sun text-warning me-1"></i>Mont Blanc (4,808m):
+            Favorable weather window open for Goûter route</span
+          >
+          <span class="ticker-separator mx-2">•</span>
+          <span class="ticker-item"
+            ><i class="fas fa-shield-alt text-primary me-1"></i>Safety Advisory:
+            Mandatory avalanche beacon checks active across Karakoram &
+            Alps</span
+          >
+        </div>
+      </div>
+      <div class="ticker-controls">
+        <button
+          id="ticker-pause-btn"
+          class="ticker-btn"
+          title="Pause / Resume Ticker"
+          aria-label="Pause ticker"
+        >
+          <i class="fas fa-pause"></i>
+        </button>
+        <button
+          id="ticker-toggle-btn"
+          class="ticker-btn"
+          title="Minimize Ticker"
+          aria-label="Minimize ticker"
+        >
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================
+         SCRIPTS
+    =============================== -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/theme.js?v=9"></script>
+    <script src="js/data-loader.js?v=9"></script>
+    <script src="js/navigation.js?v=9"></script>
+    <script src="js/counter.js?v=9"></script>
+    <script src="js/datetime.js?v=9"></script>
+    <script src="js/geolocation.js?v=9"></script>
+    <script src="js/ticker.js?v=9"></script>
+    <script src="js/gallery.js?v=9"></script>
+    <script src="js/map.js?v=9"></script>
+    <script src="js/contact.js?v=9"></script>
+    <script src="js/details.js?v=9"></script>
+    <script src="js/cart.js?v=9"></script>
+    <script src="js/checklist.js?v=9"></script>
+    <script src="js/app.js?v=9"></script>
+
+    <script>
+      // Set footer year dynamically
+      document.getElementById("footer-year").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>
